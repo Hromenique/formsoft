@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 /**
  * 
- * Classe que representa um item do pedido. Contém informações do pedido e do produto saído do estoque
+ * Classe que representa um item do pedido.
  * 
  * @author Hromenique Cezniowscki Leite Batista
  * @version 1.0
@@ -21,15 +21,15 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="item_pedido")
-@IdClass(br.com.hrom.modelo.pk.PedidoProdutoEstoquePK.class)
+@IdClass(br.com.hrom.modelo.pk.PedidoProdutoPK.class)
 public class ItemPedido implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@OneToOne(optional=false)
-    @JoinColumn(name = "cod_produto_estoque")
-	private ProdutoEstoque produtoEstoque;
+    @JoinColumn(name = "cod_produto")
+	private Produto produto;
 	
 	@Id
     @OneToOne(optional=false)
@@ -43,20 +43,12 @@ public class ItemPedido implements Serializable{
 		
 	}
 
-	public int getQuantidade() {
-		return quantidade;
+	public Produto getProduto() {
+		return produto;
 	}
 
-	public void setQuantidade(int quantidade) {
-		this.quantidade = quantidade;
-	}
-
-	public ProdutoEstoque getProdutoEstoque() {
-		return produtoEstoque;
-	}
-
-	public void setProdutoEstoque(ProdutoEstoque produtoEstoque) {
-		this.produtoEstoque = produtoEstoque;
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
 
 	public Pedido getPedido() {
@@ -66,4 +58,46 @@ public class ItemPedido implements Serializable{
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
+
+	public int getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(int quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((pedido == null) ? 0 : pedido.hashCode());
+		result = prime * result + ((produto == null) ? 0 : produto.hashCode());
+		result = prime * result + quantidade;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ItemPedido other = (ItemPedido) obj;
+		if (pedido == null) {
+			if (other.pedido != null)
+				return false;
+		} else if (!pedido.equals(other.pedido))
+			return false;
+		if (produto == null) {
+			if (other.produto != null)
+				return false;
+		} else if (!produto.equals(other.produto))
+			return false;
+		if (quantidade != other.quantidade)
+			return false;
+		return true;
+	}	
 }

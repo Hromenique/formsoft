@@ -4,7 +4,7 @@
 	<groupId>br.com.hromenique</groupId>
 	<artifactId>formsoft</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>      
+	<packaging>war</packaging>
 
 	<dependencies>
 
@@ -12,8 +12,16 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.10</version>
-			<scope>test</scope>			
+			<scope>test</scope>
 		</dependency>
+  
+		<dependency>
+			<groupId>org.jboss.weld.se</groupId>
+			<artifactId>weld-se-core</artifactId>
+			<version>2.1.0.Final</version>
+			<scope>test</scope>
+		</dependency>
+
 
 		<!-- JSF 2.2 -->
 		<dependency>
