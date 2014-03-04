@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,6 +31,7 @@ public class Pedido {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="pedido_sequence")
+	@Column(name = "cod_pedido")
 	private long codPedido;
 
 	@Temporal(TemporalType.TIMESTAMP)
@@ -41,7 +43,7 @@ public class Pedido {
 	private Date dataEntrega;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "cod_comprador")
+	@JoinColumn(name = "cod_comprador", foreignKey = @ForeignKey(name="pedido_comprador_fkey"))
 	private Comprador comprador;
 
 	@OneToMany(mappedBy="pedido")

@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 /**
  * 
@@ -20,6 +22,7 @@ import javax.persistence.SequenceGenerator;
 
 @Entity
 @SequenceGenerator(name = "produto_sequence", sequenceName = "produto_sequence", initialValue = 1, allocationSize = 1)
+@Table(uniqueConstraints={@UniqueConstraint(name = "nome_uk", columnNames = { "nome" })})
 public class Produto implements Serializable{	
 	
 	private static final long serialVersionUID = 1L;
@@ -29,7 +32,8 @@ public class Produto implements Serializable{
 	@Column(name="cod_produto")
 	private long codProduto;
 	
-	@Column(nullable=false, unique=true, length=40)
+	@Column(nullable=false, length=40)	
+	
 	private  String nome;	
 	
 	@Column(nullable=true, length=250)
