@@ -33,7 +33,6 @@ public class Produto implements Serializable{
 	private long codProduto;
 	
 	@Column(nullable=false, length=40)	
-	
 	private  String nome;	
 	
 	@Column(nullable=true, length=250)
@@ -43,6 +42,12 @@ public class Produto implements Serializable{
 	private String fabricante;
 	
 	public Produto(){		
+	}
+	
+	public Produto(long codProduto, String nome, String fabricante){
+		this.codProduto = codProduto;
+		this.nome = nome;
+		this.fabricante = fabricante;
 	}
 
 	public String getNome() {

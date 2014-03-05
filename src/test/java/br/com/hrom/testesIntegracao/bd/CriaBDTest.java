@@ -1,14 +1,10 @@
-package br.com.hrom.testesIntegracao;
-
-//import static org.junit.Assert.*;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+package br.com.hrom.testesIntegracao.bd;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import br.com.hrom.runner.WeldJUnit4Runner;
+import br.com.hrom.testesUtil.NovoBancoDadosTest;
 
 /**
  * 
@@ -18,18 +14,13 @@ import org.junit.Test;
  * @version 1.0
  *
  */
+
+@RunWith(WeldJUnit4Runner.class)
 public class CriaBDTest {	
 	
 	@Test
+	@NovoBancoDadosTest
 	public void criarBancoDados(){
-		//Persistence.createEntityManagerFactory("formsoft_bd_pu");
-		//<property name="hibernate.hbm2ddl.auto" value="create" />
-		
-		Map<String, String> properties = new HashMap<String, String>()	;
-		properties.put("hibernate.hbm2ddl.auto", "create");		
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("formsoft_bd_pu", properties);
-		
-		//criou o Banco de Dados
 		return;
 	}
 }
