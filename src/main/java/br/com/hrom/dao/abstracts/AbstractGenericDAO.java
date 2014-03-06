@@ -3,6 +3,7 @@ package br.com.hrom.dao.abstracts;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
@@ -17,9 +18,12 @@ import br.com.hrom.dao.interfaces.GenericDAO;
  *
  * @param <T>
  */
+
 public class AbstractGenericDAO<T> implements GenericDAO<T> {
 
+	@Inject
 	private EntityManager entityManager;
+	
 	private Class<T> classePersistida;
 	
 	public AbstractGenericDAO() {
@@ -52,5 +56,5 @@ public class AbstractGenericDAO<T> implements GenericDAO<T> {
 	@Override
 	public void atualiza(T entidade) {
 		entityManager.merge(entidade);		
-	}
+	}	
 }
