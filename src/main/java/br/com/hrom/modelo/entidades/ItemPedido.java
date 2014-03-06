@@ -42,6 +42,14 @@ public class ItemPedido implements Serializable{
 	
 	public ItemPedido(){
 		
+	}	
+	
+
+	public ItemPedido(Produto produto, Pedido pedido, int quantidade) {
+		super();
+		this.produto = produto;
+		this.pedido = pedido;
+		this.quantidade = quantidade;
 	}
 
 	public Produto getProduto() {

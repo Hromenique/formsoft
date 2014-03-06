@@ -20,14 +20,13 @@ import javax.persistence.Persistence;
 public class JPAUtil {
 	
 	@Produces @ApplicationScoped
-	public EntityManagerFactory criaEntityManagerFactory(){
+	public EntityManagerFactory criaEntityManagerFactory(){		
 		return Persistence.createEntityManagerFactory("formsoft_db_pu");
 	}
 	
 	@Produces @RequestScoped
-	public EntityManager criaEntityManager(){
-		EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formsoft_db_pu");
-		return entityManagerFactory.createEntityManager();	
+	public EntityManager criaEntityManager(EntityManagerFactory entityManagerFactory){			
+		return entityManagerFactory.createEntityManager();			
 	}	
 	
 	public void fechaEntityManager(@Disposes EntityManager entityManager){
