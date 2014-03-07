@@ -1,4 +1,4 @@
-package br.com.hrom.modelo.negocio;
+package br.com.hrom.services.concretos;
 
 import java.io.Serializable;
 import java.util.List;
@@ -17,7 +17,7 @@ import br.com.hrom.modelo.entidades.Produto;
  */
 
 @RequestScoped
-public class ProdutoRN implements Serializable {
+public class ProdutoService implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

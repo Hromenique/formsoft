@@ -12,6 +12,8 @@ import br.com.hrom.modelo.entidades.Produto;
 
 /**
  * 
+ * DAO concreto para a entidade Produto
+ * 
  * @author Hromenique Cezniowscki Leite Batista
  * @version 1.0
  *
@@ -19,14 +21,18 @@ import br.com.hrom.modelo.entidades.Produto;
 
 public class ProdutoDAO extends AbstractGenericDAO<Produto> implements IProdutoDAO{
 
+	private static final long serialVersionUID = 1L;
+
 	@Inject
-	private EntityManager entityManager;
+	public ProdutoDAO(EntityManager entityManager) {
+		super(entityManager);		
+	}	
 	
 	@Override
 	public List<Produto> buscaProdutoPorNome(String nomeProduto) {
 		String nomeBuscado = "%"+nomeProduto+"%";
 		String sql = "SELECT produto FROM Produto produto WHERE produto.nome LIKE %?1%";
-		TypedQuery<Produto> query = entityManager.createQuery(sql, Produto.class);
+		TypedQuery<Produto> query = getEntityManager().createQuery(sql, Produto.class);
 		List<Produto> resultList = query.setParameter(0, nomeBuscado).getResultList();		
 		
 		return resultList;

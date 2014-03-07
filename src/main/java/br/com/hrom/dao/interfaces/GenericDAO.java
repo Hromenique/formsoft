@@ -2,6 +2,8 @@ package br.com.hrom.dao.interfaces;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+
 /**
  * 
  * Interface de um DAO genérico (Data Acess Object) que apresenta as operações comuns executadas por qualquer DAO do sistema
@@ -18,4 +20,5 @@ public interface GenericDAO <T>{
 	List<T> listaTodos();
 	void salva(T entidade);
 	void atualiza(T entidade);
+	EntityManager getEntityManager();
 }

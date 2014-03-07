@@ -1,5 +1,6 @@
 package br.com.hrom.dao.abstracts;
 
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
@@ -19,14 +20,18 @@ import br.com.hrom.dao.interfaces.GenericDAO;
  * @param <T>
  */
 
-public class AbstractGenericDAO<T> implements GenericDAO<T> {
+public class AbstractGenericDAO<T> implements GenericDAO<T>, Serializable {	
 
-	@Inject
-	private EntityManager entityManager;
+	private static final long serialVersionUID = 1L;
 	
+	private EntityManager entityManager;	
 	private Class<T> classePersistida;
 	
-	public AbstractGenericDAO() {
+	
+	@Inject
+	public AbstractGenericDAO(EntityManager entityManager) {
+		
+		this.entityManager = entityManager;
 		this.classePersistida = (Class<T>) ((ParameterizedType) getClass()
 				.getGenericSuperclass()).getActualTypeArguments()[0];
 	}
@@ -56,5 +61,10 @@ public class AbstractGenericDAO<T> implements GenericDAO<T> {
 	@Override
 	public void atualiza(T entidade) {
 		entityManager.merge(entidade);		
+	}
+
+	@Override
+	public EntityManager getEntityManager() {
+		return this.entityManager;
 	}	
 }

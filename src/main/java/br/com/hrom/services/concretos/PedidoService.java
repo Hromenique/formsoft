@@ -1,5 +1,5 @@
-package br.com.hrom.modelo.negocio;
+package br.com.hrom.services.concretos;
 
-public class PedidoRN {
+public class PedidoService {
 
 }
