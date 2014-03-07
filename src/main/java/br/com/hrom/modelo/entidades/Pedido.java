@@ -1,5 +1,6 @@
 package br.com.hrom.modelo.entidades;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -50,7 +51,27 @@ public class Pedido {
 	private List<ItemPedido> itensPedido;
 
 	public Pedido() {
-
+		this.itensPedido = new ArrayList<ItemPedido>();
+	}
+	
+	public void incluiProduto(Produto produto, int quantidade) {		
+		int indiceItemPedido = this.itensPedido.indexOf(produto);
+		
+		if(indiceItemPedido != -1){
+			aumentaQuantidadeItemPedido(this.itensPedido.get(indiceItemPedido), quantidade);
+		}else{
+			incluiNovoProdutoNoPedido(produto, quantidade);
+		}
+	}
+	
+	private void incluiNovoProdutoNoPedido(Produto produto, int quantidade){
+		ItemPedido novoItemPedido = new ItemPedido(produto, this, quantidade);
+		this.itensPedido.add(novoItemPedido);
+	}
+	
+	private void aumentaQuantidadeItemPedido(ItemPedido item, int quantidadeParaSomar){
+		int quantidadeAtualizada= item.getQuantidade() + quantidadeParaSomar;
+		item.setQuantidade(quantidadeAtualizada);
 	}
 
 	public long getCodPedido() {
