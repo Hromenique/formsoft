@@ -1,4 +1,4 @@
-package br.com.hrom.services.concretos;
+package br.com.hrom.services.interfaces;
 
 import br.com.hrom.modelo.entidades.Comprador;
 

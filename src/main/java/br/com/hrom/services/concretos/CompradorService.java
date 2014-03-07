@@ -5,8 +5,9 @@ import java.io.Serializable;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
-import br.com.hrom.dao.concretos.CompradorDAO;
+import br.com.hrom.dao.interfaces.ICompradorDAO;
 import br.com.hrom.modelo.entidades.Comprador;
+import br.com.hrom.services.interfaces.ICompradorService;
 
 /**
  * 
@@ -20,10 +21,14 @@ import br.com.hrom.modelo.entidades.Comprador;
 @RequestScoped
 public class CompradorService implements ICompradorService, Serializable {	
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;	
+	
+	private ICompradorDAO dao;
 	
 	@Inject
-	private CompradorDAO dao;
+	public CompradorService(ICompradorDAO dao){
+		this.dao = dao;
+	}
 	
 	@Override
 	public void cadastraComprador(Comprador comprador){
