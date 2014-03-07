@@ -39,32 +39,18 @@ public class Produto implements Serializable{
 	private String descricao;
 	
 	@Column(nullable=true, length=40)
-	private String fabricante;
-	
-	@Column(name="quant_inicial",nullable=false)
-	private int quantidadeInicial;
-	
-	@Column(name="quant_atual",nullable=false, updatable=false)
-	private int quantidadeAtual;
-	
-	@Column(name="quant_minima", nullable=false)
-	private int quantidadeMinima;
+	private String fabricante;	
 	
 	public Produto(){		
 		
 	}		
 
-	public Produto(long codProduto, String nome, String descricao,
-			String fabricante, int quantidadeInicial, int quantidadeAtual,
-			int quantidadeMinima) {
+	public Produto(long codProduto, String nome, String descricao,String fabricante) {
 		super();
 		this.codProduto = codProduto;
 		this.nome = nome;
 		this.descricao = descricao;
-		this.fabricante = fabricante;
-		this.quantidadeInicial = quantidadeInicial;
-		this.quantidadeAtual = quantidadeAtual;
-		this.quantidadeMinima = quantidadeMinima;
+		this.fabricante = fabricante;	
 	}
 
 	public long getCodProduto() {
@@ -99,30 +85,6 @@ public class Produto implements Serializable{
 		this.fabricante = fabricante;
 	}
 
-	public int getQuantidadeInicial() {
-		return quantidadeInicial;
-	}
-
-	public void setQuantidadeInicial(int quantidadeInicial) {
-		this.quantidadeInicial = quantidadeInicial;
-	}
-
-	public int getQuantidadeAtual() {
-		return quantidadeAtual;
-	}
-
-	public void setQuantidadeAtual(int quantidadeAtual) {
-		this.quantidadeAtual = quantidadeAtual;
-	}
-
-	public int getQuantidadeMinima() {
-		return quantidadeMinima;
-	}
-
-	public void setQuantidadeMinima(int quantidadeMinima) {
-		this.quantidadeMinima = quantidadeMinima;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -133,9 +95,6 @@ public class Produto implements Serializable{
 		result = prime * result
 				+ ((fabricante == null) ? 0 : fabricante.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result + quantidadeAtual;
-		result = prime * result + quantidadeInicial;
-		result = prime * result + quantidadeMinima;
 		return result;
 	}
 
@@ -165,12 +124,6 @@ public class Produto implements Serializable{
 				return false;
 		} else if (!nome.equals(other.nome))
 			return false;
-		if (quantidadeAtual != other.quantidadeAtual)
-			return false;
-		if (quantidadeInicial != other.quantidadeInicial)
-			return false;
-		if (quantidadeMinima != other.quantidadeMinima)
-			return false;
 		return true;
-	}
+	}	
 }
