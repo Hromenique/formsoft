@@ -1,9 +1,6 @@
 package br.com.hrom.testesIntegracao.bd;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import br.com.hrom.runner.WeldJUnit4Runner;
 import br.com.hrom.testesUtil.TestJPAUtil;
 
 /**
@@ -14,8 +11,6 @@ import br.com.hrom.testesUtil.TestJPAUtil;
  * @version 1.0
  *
  */
-
-@RunWith(WeldJUnit4Runner.class)
 public class CriaBDTest {	
 	
 	@Test	

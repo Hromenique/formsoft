@@ -1,0 +1,98 @@
+<!-- 
+@Author Hromenique Cezniowscki Leite Batista
+@Version 1.0
+ 
+Template Principal do sistema
+-->
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Formsoft</title>
+	
+	<style>
+	.cabecalho{
+		margin-bottom:1%
+	}
+	
+	.logo_secao{
+		color: gray;
+		font-size: 60px;
+		font-family:Arial;
+	}
+	
+	.info_usuario_sair{
+	margin-left: 90%
+	}	
+	
+	.barra_menu{
+		margin-bottom:1.5%;
+	}
+	
+	.rodape{
+		margin-top:95%;		
+	}
+	</style>
+</h:head>
+
+<h:body> 
+	
+	<div class="cabecalho">
+		<div class="logo_secao">
+			Formsoft
+		</div>
+		<div class="info_usuario_sair">
+			
+			<h:outputLink value="url">
+				<h:graphicImage library="images" name="sair.png" />
+			</h:outputLink>
+		</div>		 
+	</div>
+
+
+
+	<!-- Menu -->	
+	<div class="barra_menu">
+		<h:form>
+			<p:menubar>
+				<p:menuitem value="#{msg.inicio}" action="inicio" />
+	
+				<p:submenu label="#{msg.produto}">
+					<p:menuitem value="#{msg.cadastroProduto}" action="cadastro_produto" />
+					<p:menuitem value="#{msg.cadastroLote}" action="cadastro_lote" />
+				</p:submenu>
+				<p:submenu label="#{msg.pedido}">
+					<p:menuitem value="#{msg.cadastroPedido}" action="cadastro_pedido" />
+				</p:submenu>			
+				<p:submenu label="#{msg.relatorios}">
+					<p:menuitem value="#{msg.relPosicaoQuantFinanceiro}" action="relatorio_1" />
+					<p:menuitem value="#{msg.relProdutosAbaixoMinimo}" action="relatorio_2" />
+					<p:menuitem value="#{msg.relVendasEfetuadas}" action="relatorio_3" />
+				</p:submenu>
+			</p:menubar>
+		</h:form>
+	</div>
+
+	<!-- Seção dinâmica onde será inserido as funcionalidades -->
+	<div class="centro">
+		<ui:insert name="centro">
+			
+		</ui:insert>
+	</div>
+
+	<div class="rodape">
+		<p>Copyright &copy; 2014 Hromenique Cezniowscki Leite Batista. All
+			rights reserved</p>
+	</div>
+
+</h:body>
+
+
+</html>
