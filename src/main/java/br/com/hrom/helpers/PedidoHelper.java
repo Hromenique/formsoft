@@ -35,7 +35,7 @@ public class PedidoHelper {
 		
 		//produto NÃO incluso nos itens do pedido
 		if(itemPedido == null){			
-			incluiNovoProdutoNoPedido(novoProduto, quantidade);
+			//incluiNovoProdutoNoPedido(novoProduto, quantidade);
 		}else{
 			
 		}	
@@ -50,10 +50,11 @@ public class PedidoHelper {
 		return this.pedido;
 	}
 	
+	/*
 	private void incluiNovoProdutoNoPedido(Produto produto, int quantidade){
 		ItemPedido novoItemPedido = new ItemPedido(produto, pedido, quantidade);
 		this.itensPedido.put(produto.getCodProduto(), novoItemPedido);
-	}	
+	}*/
 	
 	private void aumentaQuantidadeItemPedido(ItemPedido item, int quantidadeParaSomar){
 		int quantidadeAtualizada= item.getQuantidade() + quantidadeParaSomar;

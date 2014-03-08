@@ -22,42 +22,34 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="item_pedido")
-@IdClass(br.com.hrom.modelo.pk.PedidoProdutoPK.class)
+@IdClass(br.com.hrom.modelo.pk.PedidoProdutoEstoquePK.class)
 public class ItemPedido implements Serializable{
 	
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	 @ManyToOne(optional=false)
-    @JoinColumn(name = "cod_produto", foreignKey= @ForeignKey(name = "item_pedido_produto_fkey") )
-	private Produto produto;
+	private static final long serialVersionUID = 1L;	
 	
 	@Id
     @ManyToOne(optional=false)
     @JoinColumn(name = "cod_pedido", foreignKey= @ForeignKey(name = "item_pedido_pedido_fkey"))
 	private Pedido pedido;
 	
+	@Id
+    @ManyToOne(optional=false)
+    @JoinColumn(name = "cod_produto_estoque", foreignKey= @ForeignKey(name = "item_pedido_produto_estoque_fkey"))
+	private ProdutoEstoque produtoEstoque;
+	
 	@Column(nullable=false)	
 	private int quantidade;	
 	
 	public ItemPedido(){
 		
-	}	
-	
+	}
 
-	public ItemPedido(Produto produto, Pedido pedido, int quantidade) {
+	public ItemPedido(Pedido pedido, ProdutoEstoque produtoEstoque,
+			int quantidade) {
 		super();
-		this.produto = produto;
 		this.pedido = pedido;
+		this.produtoEstoque = produtoEstoque;
 		this.quantidade = quantidade;
-	}
-
-	public Produto getProduto() {
-		return produto;
-	}
-
-	public void setProduto(Produto produto) {
-		this.produto = produto;
 	}
 
 	public Pedido getPedido() {
@@ -66,6 +58,14 @@ public class ItemPedido implements Serializable{
 
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
+	}
+
+	public ProdutoEstoque getProdutoEstoque() {
+		return produtoEstoque;
+	}
+
+	public void setProdutoEstoque(ProdutoEstoque produtoEstoque) {
+		this.produtoEstoque = produtoEstoque;
 	}
 
 	public int getQuantidade() {
@@ -81,7 +81,8 @@ public class ItemPedido implements Serializable{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((pedido == null) ? 0 : pedido.hashCode());
-		result = prime * result + ((produto == null) ? 0 : produto.hashCode());
+		result = prime * result
+				+ ((produtoEstoque == null) ? 0 : produtoEstoque.hashCode());
 		result = prime * result + quantidade;
 		return result;
 	}
@@ -100,10 +101,10 @@ public class ItemPedido implements Serializable{
 				return false;
 		} else if (!pedido.equals(other.pedido))
 			return false;
-		if (produto == null) {
-			if (other.produto != null)
+		if (produtoEstoque == null) {
+			if (other.produtoEstoque != null)
 				return false;
-		} else if (!produto.equals(other.produto))
+		} else if (!produtoEstoque.equals(other.produtoEstoque))
 			return false;
 		if (quantidade != other.quantidade)
 			return false;

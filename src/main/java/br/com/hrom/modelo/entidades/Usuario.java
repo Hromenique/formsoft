@@ -1,12 +1,17 @@
 package br.com.hrom.modelo.entidades;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -39,16 +44,25 @@ public class Usuario implements Serializable {
 	@Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT TRUE")
 	private boolean ativo;
 	
+	@ElementCollection(targetClass = String.class)
+	@JoinTable(name = "usuario_permissao", 
+				uniqueConstraints = { @UniqueConstraint(name = "cod_usuario_permissao_uk", columnNames = {"cod_usuario", "permissao" }) }, 
+				joinColumns = @JoinColumn(name = "cod_usuario", foreignKey = @ForeignKey(name = "usuario_permissao_fkey")))
+	@Column(name = "permissao", length = 40)
+	private Set<String> permissao;
+	
 	public Usuario(){
 		
 	}
 
-	public Usuario(long codUsuario, String nome, String login, boolean ativo) {
+	public Usuario(long codUsuario, String nome, String login, boolean ativo,
+			Set<String> permissao) {
 		super();
 		this.codUsuario = codUsuario;
 		this.nome = nome;
 		this.login = login;
 		this.ativo = ativo;
+		this.permissao = permissao;
 	}
 
 	public long getCodUsuario() {
@@ -83,6 +97,14 @@ public class Usuario implements Serializable {
 		this.ativo = ativo;
 	}
 
+	public Set<String> getPermissao() {
+		return permissao;
+	}
+
+	public void setPermissao(Set<String> permissao) {
+		this.permissao = permissao;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -91,6 +113,8 @@ public class Usuario implements Serializable {
 		result = prime * result + (int) (codUsuario ^ (codUsuario >>> 32));
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result
+				+ ((permissao == null) ? 0 : permissao.hashCode());
 		return result;
 	}
 
@@ -116,6 +140,11 @@ public class Usuario implements Serializable {
 			if (other.nome != null)
 				return false;
 		} else if (!nome.equals(other.nome))
+			return false;
+		if (permissao == null) {
+			if (other.permissao != null)
+				return false;
+		} else if (!permissao.equals(other.permissao))
 			return false;
 		return true;
 	}

@@ -41,16 +41,21 @@ public class Produto implements Serializable{
 	@Column(nullable=true, length=40)
 	private String fabricante;	
 	
+	@Column(name="quant_minima", nullable=false)
+	private int quantidadeMinima;
+	
 	public Produto(){		
 		
-	}		
+	}	
 
-	public Produto(long codProduto, String nome, String descricao,String fabricante) {
+	public Produto(long codProduto, String nome, String descricao,
+			String fabricante, int quantidadeMinima) {
 		super();
 		this.codProduto = codProduto;
 		this.nome = nome;
 		this.descricao = descricao;
-		this.fabricante = fabricante;	
+		this.fabricante = fabricante;
+		this.quantidadeMinima = quantidadeMinima;
 	}
 
 	public long getCodProduto() {
@@ -85,6 +90,14 @@ public class Produto implements Serializable{
 		this.fabricante = fabricante;
 	}
 
+	public int getQuantidadeMinima() {
+		return quantidadeMinima;
+	}
+
+	public void setQuantidadeMinima(int quantidadeMinima) {
+		this.quantidadeMinima = quantidadeMinima;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -95,6 +108,7 @@ public class Produto implements Serializable{
 		result = prime * result
 				+ ((fabricante == null) ? 0 : fabricante.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + quantidadeMinima;
 		return result;
 	}
 
@@ -124,6 +138,8 @@ public class Produto implements Serializable{
 				return false;
 		} else if (!nome.equals(other.nome))
 			return false;
+		if (quantidadeMinima != other.quantidadeMinima)
+			return false;
 		return true;
-	}	
+	}		
 }

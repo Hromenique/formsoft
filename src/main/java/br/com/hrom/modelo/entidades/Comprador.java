@@ -48,6 +48,16 @@ public class Comprador implements Serializable{
 	
 	public Comprador(){
 		
+	}	
+
+	public Comprador(long codComprador, String nome, String endereco,
+			String cpfCnpj, TipoPessoa tipoPessoa) {
+		super();
+		this.codComprador = codComprador;
+		this.nome = nome;
+		this.endereco = endereco;
+		this.cpfCnpj = cpfCnpj;
+		this.tipoPessoa = tipoPessoa;
 	}
 
 	public String getNome() {

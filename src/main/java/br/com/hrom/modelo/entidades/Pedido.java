@@ -1,5 +1,6 @@
 package br.com.hrom.modelo.entidades;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +29,9 @@ import javax.persistence.TemporalType;
 
 @Entity
 @SequenceGenerator(name = "pedido_sequence", sequenceName = "pedido_sequence", initialValue = 1, allocationSize = 1)
-public class Pedido {
+public class Pedido implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="pedido_sequence")
@@ -44,7 +47,7 @@ public class Pedido {
 	private Date dataEntrega;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "cod_comprador", foreignKey = @ForeignKey(name="pedido_comprador_fkey"))
+	@JoinColumn(name = "cod_comprador", foreignKey = @ForeignKey(name="pedido_comprador_fkey"), nullable = false)
 	private Comprador comprador;
 
 	@OneToMany(mappedBy="pedido")
@@ -52,26 +55,16 @@ public class Pedido {
 
 	public Pedido() {
 		this.itensPedido = new ArrayList<ItemPedido>();
-	}
+	}	
 	
-	public void incluiProduto(Produto produto, int quantidade) {		
-		int indiceItemPedido = this.itensPedido.indexOf(produto);
-		
-		if(indiceItemPedido != -1){
-			aumentaQuantidadeItemPedido(this.itensPedido.get(indiceItemPedido), quantidade);
-		}else{
-			incluiNovoProdutoNoPedido(produto, quantidade);
-		}
-	}
-	
-	private void incluiNovoProdutoNoPedido(Produto produto, int quantidade){
-		ItemPedido novoItemPedido = new ItemPedido(produto, this, quantidade);
-		this.itensPedido.add(novoItemPedido);
-	}
-	
-	private void aumentaQuantidadeItemPedido(ItemPedido item, int quantidadeParaSomar){
-		int quantidadeAtualizada= item.getQuantidade() + quantidadeParaSomar;
-		item.setQuantidade(quantidadeAtualizada);
+	public Pedido(long codPedido, Date dataCompra, Date dataEntrega,
+			Comprador comprador, List<ItemPedido> itensPedido) {
+		super();
+		this.codPedido = codPedido;
+		this.dataCompra = dataCompra;
+		this.dataEntrega = dataEntrega;
+		this.comprador = comprador;
+		this.itensPedido = itensPedido;
 	}
 
 	public long getCodPedido() {
@@ -163,4 +156,28 @@ public class Pedido {
 			return false;
 		return true;
 	}
+
+
+	/**
+	public void incluiProduto(Produto produto, int quantidade) {		
+		int indiceItemPedido = this.itensPedido.indexOf(produto);
+		
+		if(indiceItemPedido != -1){
+			aumentaQuantidadeItemPedido(this.itensPedido.get(indiceItemPedido), quantidade);
+		}else{
+			incluiNovoProdutoNoPedido(produto, quantidade);
+		}
+	}
+	
+	
+	private void incluiNovoProdutoNoPedido(Produto produto, int quantidade){
+		ItemPedido novoItemPedido = new ItemPedido(produto, this, quantidade);
+		this.itensPedido.add(novoItemPedido);
+	}
+	
+	private void aumentaQuantidadeItemPedido(ItemPedido item, int quantidadeParaSomar){
+		int quantidadeAtualizada= item.getQuantidade() + quantidadeParaSomar;
+		item.setQuantidade(quantidadeAtualizada);
+	}
+	*/	
 }

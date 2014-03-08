@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import br.com.hrom.runner.WeldJUnit4Runner;
-import br.com.hrom.testesUtil.NovoBancoDadosTest;
+import br.com.hrom.testesUtil.TestJPAUtil;
 
 /**
  * 
@@ -18,9 +18,8 @@ import br.com.hrom.testesUtil.NovoBancoDadosTest;
 @RunWith(WeldJUnit4Runner.class)
 public class CriaBDTest {	
 	
-	@Test
-	@NovoBancoDadosTest
+	@Test	
 	public void criarBancoDados(){
-		return;
+		TestJPAUtil.criaBancoDadosVazio();
 	}
 }

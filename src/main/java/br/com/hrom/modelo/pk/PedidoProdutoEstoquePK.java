@@ -11,13 +11,13 @@ import java.io.Serializable;
  * @version 1.0
  *
  */
-public class PedidoProdutoPK implements Serializable{
+public class PedidoProdutoEstoquePK implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private long pedido;
-	private long produto;
+	private long produtoEstoque;
 	
-	public PedidoProdutoPK(){
+	public PedidoProdutoEstoquePK(){
 		
 	}
 
@@ -30,11 +30,11 @@ public class PedidoProdutoPK implements Serializable{
 	}
 
 	public long getProduto() {
-		return produto;
+		return produtoEstoque;
 	}
 
 	public void setProduto(long produto) {
-		this.produto = produto;
+		this.produtoEstoque = produto;
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class PedidoProdutoPK implements Serializable{
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (int) (pedido ^ (pedido >>> 32));
-		result = prime * result + (int) (produto ^ (produto >>> 32));
+		result = prime * result + (int) (produtoEstoque ^ (produtoEstoque >>> 32));
 		return result;
 	}
 
@@ -54,10 +54,10 @@ public class PedidoProdutoPK implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PedidoProdutoPK other = (PedidoProdutoPK) obj;
+		PedidoProdutoEstoquePK other = (PedidoProdutoEstoquePK) obj;
 		if (pedido != other.pedido)
 			return false;
-		if (produto != other.produto)
+		if (produtoEstoque != other.produtoEstoque)
 			return false;
 		return true;
 	}
