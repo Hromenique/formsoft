@@ -23,21 +23,21 @@
 	
 		<div >		
 			<p:dialog header="Login" visible="true" position="center" closable="false" draggable="false" resizable="false" width="420">
-				<h:form>			
+				<form action="j_spring_security_check" method="post">			
 					<center>
 	                	<h:outputText value="Usuário ou senha incorretos!" rendered="#{param.erro}" style="color: darkred"/>
 	            	</center>
 				
 					<h:panelGrid columns = "2" cellpadding="5">
-						<p:outputLabel id="lb_usuario" for="usuario" value="#{msg.inputUsuario}" />  
-						<p:inputText id="usuario" required="true" />  
+						<p:outputLabel id="lb_usuario" for="j_username" value="#{msg.inputUsuario}" />  
+						<p:inputText id="j_username" required="true" />  
 						
-						<p:outputLabel id="lb_senha" for="senha" value="#{msg.inputSenha}" />  
-						<p:password id="senha" required="true"/>
+						<p:outputLabel id="lb_senha" for="j_password" value="#{msg.inputSenha}" />  
+						<p:password id="j_password" required="true"/>
 						
 						<p:commandButton value="#{msg.btnOk}" /> 	
 					</h:panelGrid> 								
-				</h:form>
+				</form>
 			</p:dialog>		
 		</div>
 			

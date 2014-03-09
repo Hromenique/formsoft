@@ -42,11 +42,11 @@ public class Usuario implements Serializable {
 	@Column(nullable=false, length=50)
 	private String login;
 	
+	@Column(nullable=false, length=10)
+	private String senha;
+	
 	@Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT TRUE")
 	private boolean ativo;
-	
-	@Transient
-	private boolean logado;
 	
 	@ElementCollection(targetClass = String.class)
 	@JoinTable(name = "usuario_permissao", 
@@ -57,14 +57,16 @@ public class Usuario implements Serializable {
 	
 	public Usuario(){
 		
-	}
+	}	
+	
 
-	public Usuario(long codUsuario, String nome, String login, boolean ativo,
-			Set<String> permissao) {
+	public Usuario(long codUsuario, String nome, String login, String senha,
+			boolean ativo, Set<String> permissao) {
 		super();
 		this.codUsuario = codUsuario;
 		this.nome = nome;
 		this.login = login;
+		this.senha = senha;
 		this.ativo = ativo;
 		this.permissao = permissao;
 	}
@@ -93,6 +95,14 @@ public class Usuario implements Serializable {
 		this.login = login;
 	}
 
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
 	public boolean isAtivo() {
 		return ativo;
 	}
@@ -105,17 +115,10 @@ public class Usuario implements Serializable {
 		return permissao;
 	}
 
-	public boolean isLogado() {
-		return logado;
-	}
-
-	public void setLogado(boolean logado) {
-		this.logado = logado;
-	}
-
 	public void setPermissao(Set<String> permissao) {
 		this.permissao = permissao;
 	}
+
 
 	@Override
 	public int hashCode() {
@@ -127,8 +130,10 @@ public class Usuario implements Serializable {
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		result = prime * result
 				+ ((permissao == null) ? 0 : permissao.hashCode());
+		result = prime * result + ((senha == null) ? 0 : senha.hashCode());
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -158,6 +163,12 @@ public class Usuario implements Serializable {
 				return false;
 		} else if (!permissao.equals(other.permissao))
 			return false;
+		if (senha == null) {
+			if (other.senha != null)
+				return false;
+		} else if (!senha.equals(other.senha))
+			return false;
 		return true;
 	}
+	
 }
