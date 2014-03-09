@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -43,6 +44,9 @@ public class Usuario implements Serializable {
 	
 	@Column(nullable=false, columnDefinition = "BOOLEAN DEFAULT TRUE")
 	private boolean ativo;
+	
+	@Transient
+	private boolean logado;
 	
 	@ElementCollection(targetClass = String.class)
 	@JoinTable(name = "usuario_permissao", 
@@ -99,6 +103,14 @@ public class Usuario implements Serializable {
 
 	public Set<String> getPermissao() {
 		return permissao;
+	}
+
+	public boolean isLogado() {
+		return logado;
+	}
+
+	public void setLogado(boolean logado) {
+		this.logado = logado;
 	}
 
 	public void setPermissao(Set<String> permissao) {

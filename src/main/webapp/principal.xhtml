@@ -17,22 +17,19 @@ Template Principal do sistema
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Formsoft</title>
 	
-	<style>
-	.cabecalho{
-		margin-bottom:1%
-	}
+	<style>	
 	
-	.logo_secao{
+	.logo-secao{
 		color: gray;
-		font-size: 60px;
+		font-size: 50px;
 		font-family:Arial;
 	}
 	
-	.info_usuario_sair{
+	.info-usuario-sair{
 	margin-left: 90%
 	}	
 	
-	.barra_menu{
+	.barra-menu{
 		margin-bottom:1.5%;
 	}
 	
@@ -45,10 +42,10 @@ Template Principal do sistema
 <h:body> 
 	
 	<div class="cabecalho">
-		<div class="logo_secao">
+		<div class="logo-secao">
 			Formsoft
 		</div>
-		<div class="info_usuario_sair">
+		<div class="info-usuario-sair">
 			
 			<h:outputLink value="url">
 				<h:graphicImage library="images" name="sair.png" />
@@ -59,7 +56,7 @@ Template Principal do sistema
 
 
 	<!-- Menu -->	
-	<div class="barra_menu">
+	<div class="barra-menu">
 		<h:form>
 			<p:menubar>
 				<p:menuitem value="#{msg.inicio}" action="inicio" />

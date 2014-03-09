@@ -6,13 +6,45 @@
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Formsoft</title>
+	
+	<style>		
+		.logo-login{
+		color: gray;
+		font-size: 50px;
+		font-family:Arial;				
+		}	
+	</style>
 </h:head>
 
-<h:body> 
+	<h:body> 
+		<div class="logo-login">
+			<span>Formsoft</span>
+		</div>
 	
-	Teste
-
-</h:body>
+		<div >		
+			<p:dialog header="Login" visible="true" position="center" closable="false" draggable="false" resizable="false" width="420">
+				<h:form>			
+					<center>
+	                	<h:outputText value="Usuário ou senha incorretos!" rendered="#{param.erro}" style="color: darkred"/>
+	            	</center>
+				
+					<h:panelGrid columns = "2" cellpadding="5">
+						<p:outputLabel id="lb_usuario" for="usuario" value="#{msg.inputUsuario}" />  
+						<p:inputText id="usuario" required="true" />  
+						
+						<p:outputLabel id="lb_senha" for="senha" value="#{msg.inputSenha}" />  
+						<p:password id="senha" required="true"/>
+						
+						<p:commandButton value="#{msg.btnOk}" /> 	
+					</h:panelGrid> 								
+				</h:form>
+			</p:dialog>		
+		</div>
+			
+		<div class="rodape">
+		
+		</div>
+	</h:body>
 
 
 </html>
