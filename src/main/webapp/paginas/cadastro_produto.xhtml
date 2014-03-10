@@ -13,25 +13,27 @@ Registrar novo Produto
 	xmlns:p="http://primefaces.org/ui"> 
 
   
-	<ui:composition template="/templates/principal.xhtml">
-	
-		<ui:define name="centro">
-			<!-- Novo Produto -->
-			<h:panelGrid columns = "2">
-				<p:outputLabel for="nome_produto" value="#{msg.inputProduto}" />  
-				<p:inputText id="nome_produto" required="true" />  
-				
-				<p:outputLabel for="fabricante" value="#{msg.inputFabricante}" />  
-				<p:inputText id="fabricante" required="true" /> 
-				
-				<p:outputLabel for="quant_minima" value="#{msg.inputQuantMin}" />  
-				<p:inputText id="quant_minima" required="true" /> 
-				
-				<p:outputLabel for="descricao" value="#{msg.inputDescricao}" /> 
-				<p:inputTextarea id="descricao"/>
-			</h:panelGrid>	
-			<p:commandButton value="#{msg.btnLimpar}" /> 
-			<p:commandButton value="#{msg.btnSalvar}" />
+	<ui:composition template="/templates/principal.xhtml">	
+		<ui:define name="centro">			
+			
+			<h:form>				
+			    <p:messages id="messages" showDetail="false" autoUpdate="true" /> 
+				<h:panelGrid id="grid" columns = "2">
+					<p:outputLabel for="nome_produto" value="#{msg.inputProduto}:" />  
+					<p:inputText id="nome_produto" value="#{cadastroProdutoMB.produto.nome}"  required="true" />  
+					
+					<p:outputLabel for="fabricante" value="#{msg.inputFabricante}:" />  
+					<p:inputText id="fabricante" value="#{cadastroProdutoMB.produto.fabricante}"  required="true" /> 
+					
+					<p:outputLabel for="quant_minima" value="#{msg.inputQuantMin}:" />  
+					<p:inputText id="quant_minima" value="#{cadastroProdutoMB.produto.quantidadeMinima}" required="true" /> 
+					
+					<p:outputLabel for="descricao" value="#{msg.inputDescricao}:" /> 
+					<p:inputTextarea id="descricao" value="#{cadastroProdutoMB.produto.descricao}" cols="50" rows="5"/>
+				</h:panelGrid>	
+				<p:commandButton value="#{msg.btnLimpar}" type="reset" /> 
+				<p:commandButton value="#{msg.btnSalvar}" actionListener="#{cadastroProdutoMB.cadastra}" update="grid" />
+			</h:form>
 		</ui:define>
 	
 	</ui:composition>

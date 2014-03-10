@@ -21,7 +21,7 @@ public class JPAUtil {
 	
 	@Produces @ApplicationScoped
 	public EntityManagerFactory criaEntityManagerFactory(){		
-		return Persistence.createEntityManagerFactory("formsoft_db_pu");
+		return Persistence.createEntityManagerFactory("formsoft_bd_pu");
 	}
 	
 	@Produces @RequestScoped

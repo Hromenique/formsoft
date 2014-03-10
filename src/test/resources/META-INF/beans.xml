@@ -4,6 +4,7 @@
 
 	<interceptors>
 		<class>br.com.hrom.testesUtil.NovoBDTestInterceptor</class>
+		<class>br.com.hrom.utils.TransacionalInterceptor</class>
 	</interceptors>
 
 </beans>

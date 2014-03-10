@@ -8,7 +8,7 @@
                             http://www.springframework.org/schema/security/spring-security-3.1.xsd"> 
  
      <http auto-config="true" use-expressions="true">
-        <intercept-url pattern="/paginas/**" access="hasRole('USUARIO')" /> 
+        <intercept-url pattern="/paginas_1/**" access="hasRole('USUARIO')" /> 
         <intercept-url pattern="/templates/**" access="denyAll"/>        
         <form-login login-page="/login.xhtml" authentication-failure-url="/login.xhtml?erro=true" always-use-default-target="true" default-target-url="/paginas/inicio.xhtml" />
         

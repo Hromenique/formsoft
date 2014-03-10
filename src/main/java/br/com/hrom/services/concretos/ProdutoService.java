@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import br.com.hrom.dao.interfaces.IProdutoDAO;
 import br.com.hrom.modelo.entidades.Produto;
 import br.com.hrom.services.interfaces.IProdutoService;
+import br.com.hrom.utils.Transacional;
 
 /**
  * 
@@ -30,6 +31,7 @@ public class ProdutoService implements Serializable, IProdutoService {
 	}
 
 	@Override
+	@Transacional
 	public void cadastraProduto(Produto produto) {
 		dao.salva(produto);
 	}

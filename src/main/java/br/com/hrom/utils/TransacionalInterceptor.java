@@ -24,10 +24,11 @@ public class TransacionalInterceptor {
 	
 	@AroundInvoke
 	public Object intercepta(InvocationContext context) throws Exception {
-
+		System.out.println("abrir transação");
 		entityManager.getTransaction().begin();
 		Object resultado = context.proceed();
 		entityManager.getTransaction().commit();
+		System.out.println("fechar transação");
 		return resultado;
 	}
 }
