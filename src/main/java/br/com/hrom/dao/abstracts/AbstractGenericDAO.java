@@ -45,7 +45,7 @@ public class AbstractGenericDAO<T> implements GenericDAO<T>, Serializable {
 	@Override
 	public List<T> listaTodos() {
 		String entidade = this.classePersistida.getSimpleName();
-		String sql = "SELECT entidade FROM " + entidade + "entidade";
+		String sql = "SELECT entidade FROM " + entidade + " entidade";
 		
 		TypedQuery<T> query = entityManager.createQuery(sql, classePersistida);
 		 List<T> resultList = query.getResultList();
