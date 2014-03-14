@@ -3,6 +3,7 @@ package br.com.hrom.managedbeans;
 import java.io.Serializable;
 
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -33,7 +34,7 @@ public class CadastroProdutoMB implements Serializable {
 	}
 	
 	public void cadastra(ActionEvent event){		
-		service.cadastraProduto(this.produto);
+		service.cadastraProduto(this.produto);		
 		ManagedBeanUtil.enviaMensagemInfo(null, "Produto adicionado(a) com sucesso", null);
 		this.produto = new Produto();		
 	}	

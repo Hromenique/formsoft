@@ -15,13 +15,14 @@ Registrar novo lote de um produto
   
 	<ui:composition template="/templates/principal.xhtml">	
 		<ui:define name="centro">		
+			<h:panelGrid columns="2">
+				<p:outputLabel for="produto" value="#{campo.inputProduto}:" />  
+				<p:inputText id="produto" value="#{loteMB.nomeProduto}"  required="true" />
+				
+				<p:commandButton  value="#{campo.btBuscar}" actionListener="#{loteMB.buscaProdutoPorNome}" update="gridProdutos"/>				
+			</h:panelGrid>
 			
-			<p:outputLabel for="nome_produto" value="#{msg.inputProduto}:" />  
-			<p:inputText id="nome_produto" value="#{loteMB.nomeProduto}"  required="true" />
-			
-			<p:commandButton />
-			
-			<p:dataTable>
+			<p:dataTable id="gridProdutos">
 			
 			
 			</p:dataTable>

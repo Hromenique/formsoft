@@ -26,10 +26,10 @@ public class LoteMB {
 	private Produto produtoSelecionado;
 	private List<Produto> produtos;
 	
-	@Inject
+	
 	private IProdutoService produtoService;
 	
-	@Inject
+	
 	private IProdutoEstoqueService produtoEstoqueService;
 	
 	public LoteMB(){

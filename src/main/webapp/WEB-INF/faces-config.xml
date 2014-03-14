@@ -7,7 +7,6 @@
 
 	<!-- Propriedades da Aplicação/ Internacionalização -->
 	<application>
-		<message-bundle>mensagens.mensagens_pt_BR</message-bundle>
 		<locale-config>
 			<default-locale>pt_BR</default-locale>
 			<supported-locale>pt_BR</supported-locale>		
@@ -17,6 +16,10 @@
 			<base-name>mensagens.mensagens</base-name>
 			<var>msg</var>
 		</resource-bundle>		
+		<resource-bundle>
+		<base-name>mensagens.campos</base-name>
+		<var>campo</var>
+	</resource-bundle>	
 	</application>
 	
 </faces-config>

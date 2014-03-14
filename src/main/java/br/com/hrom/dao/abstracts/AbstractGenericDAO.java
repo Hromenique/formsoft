@@ -54,7 +54,7 @@ public class AbstractGenericDAO<T> implements GenericDAO<T>, Serializable {
 	}
 
 	@Override
-	public void salva(T entidade) {
+	public void salva(T entidade) {		
 		entityManager.persist(entidade);		
 	}
 

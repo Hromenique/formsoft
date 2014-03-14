@@ -39,19 +39,19 @@ Template Principal do sistema
 	<div class="barra-menu">
 		<h:form>
 			<p:menubar>
-				<p:menuitem value="#{msg.inicio}" action="inicio" />
+				<p:menuitem value="#{campo.inicio}" action="inicio" />
 	
-				<p:submenu label="#{msg.produto}">
-					<p:menuitem value="#{msg.cadastroProduto}" action="cadastro_produto" />
-					<p:menuitem value="#{msg.cadastroLote}" action="cadastro_lote" />
+				<p:submenu label="#{campo.produto}">
+					<p:menuitem value="#{campo.cadastroProduto}" action="cadastro_produto" />
+					<p:menuitem value="#{campo.cadastroLote}" action="cadastro_lote" />
 				</p:submenu>
-				<p:submenu label="#{msg.pedido}">
-					<p:menuitem value="#{msg.cadastroPedido}" action="cadastro_pedido" />
+				<p:submenu label="#{campo.pedido}">
+					<p:menuitem value="#{campo.cadastroPedido}" action="cadastro_pedido" />
 				</p:submenu>			
-				<p:submenu label="#{msg.relatorios}">
-					<p:menuitem value="#{msg.relPosicaoQuantFinanceiro}" action="relatorio_1" />
-					<p:menuitem value="#{msg.relProdutosAbaixoMinimo}" action="relatorio_2" />
-					<p:menuitem value="#{msg.relVendasEfetuadas}" action="relatorio_3" />
+				<p:submenu label="#{campo.relatorios}">
+					<p:menuitem value="#{campo.relPosicaoQuantFinanceiro}" action="relatorio_1" />
+					<p:menuitem value="#{campo.relProdutosAbaixoMinimo}" action="relatorio_2" />
+					<p:menuitem value="#{campo.relVendasEfetuadas}" action="relatorio_3" />
 				</p:submenu>
 			</p:menubar>
 		</h:form>

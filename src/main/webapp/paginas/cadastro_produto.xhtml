@@ -19,20 +19,20 @@ Registrar novo Produto
 			<h:form>				
 			    <p:messages id="messages" showDetail="false" autoUpdate="true" /> 
 				<h:panelGrid id="grid" columns = "2">
-					<p:outputLabel for="nome_produto" value="#{msg.inputProduto}:" />  
+					<p:outputLabel for="nome_produto" value="#{campo.inputProduto}:" />  
 					<p:inputText id="nome_produto" value="#{cadastroProdutoMB.produto.nome}"  required="true" />  
 					
-					<p:outputLabel for="fabricante" value="#{msg.inputFabricante}:" />  
+					<p:outputLabel for="fabricante" value="#{campo.inputFabricante}:" />  
 					<p:inputText id="fabricante" value="#{cadastroProdutoMB.produto.fabricante}"  required="true" /> 
 					
-					<p:outputLabel for="quant_minima" value="#{msg.inputQuantMin}:" />  
+					<p:outputLabel for="quant_minima" value="#{campo.inputQuantMin}:" />  
 					<p:inputText id="quant_minima" value="#{cadastroProdutoMB.produto.quantidadeMinima}" required="true" /> 
 					
-					<p:outputLabel for="descricao" value="#{msg.inputDescricao}:" /> 
+					<p:outputLabel for="descricao" value="#{campo.inputDescricao}:" /> 
 					<p:inputTextarea id="descricao" value="#{cadastroProdutoMB.produto.descricao}" cols="50" rows="5"/>
 				</h:panelGrid>	
-				<p:commandButton value="#{msg.btnLimpar}" type="reset" /> 
-				<p:commandButton value="#{msg.btnSalvar}" actionListener="#{cadastroProdutoMB.cadastra}" update="grid" />
+				<p:commandButton value="#{campo.btnLimpar}" type="reset" /> 
+				<p:commandButton value="#{campo.btnSalvar}" actionListener="#{cadastroProdutoMB.cadastra}" update="grid" />
 			</h:form>
 		</ui:define>
 	

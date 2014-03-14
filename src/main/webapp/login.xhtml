@@ -25,10 +25,10 @@
 				<h:outputText value="Usuário ou senha incorretos!" rendered="#{param.erro}" style="color: darkred"/>	            	
 				<form action="j_spring_security_check" method="post">
 					<h:panelGrid columns = "2" cellpadding="5">					
-						<p:outputLabel id="lb_usuario" for="j_username" value="#{msg.inputUsuario}" />  
+						<p:outputLabel id="lb_usuario" for="j_username" value="#{campo.inputUsuario}" />  
 						<p:inputText id="j_username" required="true" />				
 						
-						<p:outputLabel id="lb_senha" for="j_password" value="#{msg.inputSenha}" />  
+						<p:outputLabel id="lb_senha" for="j_password" value="#{campo.inputSenha}" />  
 						 <p:password id="j_password" required="true"/>
 						
 						<h:commandButton value="Ok"/>						
