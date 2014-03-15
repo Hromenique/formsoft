@@ -1,5 +1,6 @@
 package br.com.hrom.utils;
 
+import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
@@ -20,8 +21,15 @@ public class ManagedBeanUtil {
 	
 	public static String getMensagemDoMessageBundle(String chave){
 		FacesContext context = FacesContext.getCurrentInstance();
-		ResourceBundle bundle = context.getApplication().getResourceBundle(context, "msg");
+		ResourceBundle bundle = context.getApplication().getResourceBundle(context, "msg");		
 		return bundle.getString(chave);			
+	}
+	
+	public static String getMensagemDoMessageBundle(String chave, Object... parametros){
+		FacesContext context = FacesContext.getCurrentInstance();
+		ResourceBundle bundle = context.getApplication().getResourceBundle(context, "msg");
+		String mensagem = bundle.getString(chave);
+		return MessageFormat.format(mensagem, parametros);		
 	}
 	
 	public static void enviaMensagemErro(String destino, String sumario, String descricao){

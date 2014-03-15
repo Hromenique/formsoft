@@ -7,6 +7,7 @@ import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.hrom.exceptions.services.ProdutoJaExistenteException;
 import br.com.hrom.modelo.entidades.Produto;
 import br.com.hrom.services.interfaces.IProdutoService;
 import br.com.hrom.utils.ManagedBeanUtil;
@@ -33,7 +34,16 @@ public class CadastroProdutoMB implements Serializable {
 	}
 	
 	public void cadastra(ActionEvent event){		
-		service.cadastraProduto(this.produto);		
+		
+		try {
+			service.cadastraProduto(this.produto);
+		} catch (ProdutoJaExistenteException e) {
+			String mensagemErro = ManagedBeanUtil.getMensagemDoMessageBundle("produtoJaExistente", this.produto.getNome());
+			ManagedBeanUtil.enviaMensagemErro(null, mensagemErro, null);
+			e.printStackTrace();
+			return; //manter valores na tela
+		}		
+		
 		ManagedBeanUtil.enviaMensagemInfo(null, ManagedBeanUtil.getMensagemDoMessageBundle("produtoAdicionado"), null);
 		this.produto = new Produto();		
 	}	

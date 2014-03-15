@@ -20,7 +20,6 @@
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
 
-
 	<!-- CDI/Weld -->
 	<listener>
 		<listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>

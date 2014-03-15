@@ -14,6 +14,7 @@ import br.com.hrom.modelo.entidades.Produto;
  */
 public interface IProdutoDAO extends GenericDAO<Produto>{
 	
-	List<Produto> buscaProdutoPorNome(String nomeProduto);
+	List<Produto> buscaProdutosPorNome(String nomeProduto);
+	Produto buscaProdutoPorNome(String nomeProduto);
 
 }

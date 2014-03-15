@@ -7,6 +7,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import br.com.hrom.dao.interfaces.IProdutoDAO;
+import br.com.hrom.exceptions.services.ProdutoJaExistenteException;
 import br.com.hrom.modelo.entidades.Produto;
 import br.com.hrom.services.interfaces.IProdutoService;
 import br.com.hrom.utils.Transacional;
@@ -32,7 +33,13 @@ public class ProdutoService implements Serializable, IProdutoService {
 
 	@Override
 	@Transacional
-	public void cadastraProduto(Produto produto) {
+	public void cadastraProduto(Produto produto) throws ProdutoJaExistenteException {
+		//Verificar a existência prévia do produto
+		Produto produtoBD = dao.buscaProdutoPorNome(produto.getNome());
+		if(produtoBD != null){
+			throw new ProdutoJaExistenteException("Um produto chamado "+ produto.getNome() + " já existe no banco de dados");		
+		}
+		
 		dao.salva(produto);
 	}
 	
@@ -50,7 +57,7 @@ public class ProdutoService implements Serializable, IProdutoService {
 	
 	@Override
 	public List<Produto> buscaProdutoPorNome(String nome) {
-		List<Produto> produtos = dao.buscaProdutoPorNome(nome);
+		List<Produto> produtos = dao.buscaProdutosPorNome(nome);
 		return produtos;
 	}
 }
