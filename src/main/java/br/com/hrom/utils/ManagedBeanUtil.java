@@ -1,5 +1,7 @@
 package br.com.hrom.utils;
 
+import java.util.ResourceBundle;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -11,10 +13,15 @@ import javax.faces.context.FacesContext;
  *
  */
 public class ManagedBeanUtil {
-			//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, produto.getNome() + "adicionado(a) com sucesso", produto.getNome() + "adicionado(a) com sucesso"));
 
 	public static void enviaMensagemInfo(String destino, String sumario, String descricao){
 		enviaMensagem(FacesMessage.SEVERITY_INFO, destino, sumario, descricao );
+	}
+	
+	public static String getMensagemDoMessageBundle(String chave){
+		FacesContext context = FacesContext.getCurrentInstance();
+		ResourceBundle bundle = context.getApplication().getResourceBundle(context, "msg");
+		return bundle.getString(chave);			
 	}
 	
 	public static void enviaMensagemErro(String destino, String sumario, String descricao){
@@ -32,6 +39,5 @@ public class ManagedBeanUtil {
 	
 	private static void enviaMensagem(FacesMessage.Severity severidade,String destino, String sumario, String descricao ){
 		FacesContext.getCurrentInstance().addMessage(destino, new FacesMessage(severidade, sumario, descricao));
-	}
-
+	}		
 }

@@ -17,9 +17,9 @@
 			<var>msg</var>
 		</resource-bundle>		
 		<resource-bundle>
-		<base-name>mensagens.campos</base-name>
-		<var>campo</var>
-	</resource-bundle>	
+			<base-name>mensagens.campos</base-name>
+			<var>campo</var>
+		</resource-bundle>	
 	</application>
 	
 </faces-config>
