@@ -1,6 +1,9 @@
 package br.com.hrom.utils;
 
+import java.text.DateFormat;
 import java.text.MessageFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
@@ -13,16 +16,12 @@ import javax.faces.context.FacesContext;
  * @version 1.0
  *
  */
-public class ManagedBeanUtil {
+public class ManagedBeanUtil {	
 
-	public static void enviaMensagemInfo(String destino, String sumario, String descricao){
-		enviaMensagem(FacesMessage.SEVERITY_INFO, destino, sumario, descricao );
-	}
-	
-	public static String getMensagemDoMessageBundle(String chave){
+	public static String getMensagemDoMessageBundle(String chave) {
 		FacesContext context = FacesContext.getCurrentInstance();
-		ResourceBundle bundle = context.getApplication().getResourceBundle(context, "msg");		
-		return bundle.getString(chave);			
+		ResourceBundle bundle = context.getApplication().getResourceBundle(context, "msg");
+		return bundle.getString(chave);
 	}
 	
 	public static String getMensagemDoMessageBundle(String chave, Object... parametros){
@@ -30,6 +29,16 @@ public class ManagedBeanUtil {
 		ResourceBundle bundle = context.getApplication().getResourceBundle(context, "msg");
 		String mensagem = bundle.getString(chave);
 		return MessageFormat.format(mensagem, parametros);		
+	}
+	
+	public static String formataData(Date data){
+		Locale locale = FacesContext.getCurrentInstance().getViewRoot().getLocale();
+		DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM, locale);
+		return dateFormat.format(data);
+	}
+	
+	public static void enviaMensagemInfo(String destino, String sumario, String descricao){
+		enviaMensagem(FacesMessage.SEVERITY_INFO, destino, sumario, descricao );
 	}
 	
 	public static void enviaMensagemErro(String destino, String sumario, String descricao){

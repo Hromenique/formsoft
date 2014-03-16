@@ -37,10 +37,10 @@ public class CadastroProdutoMB implements Serializable {
 		
 		try {
 			service.cadastraProduto(this.produto);
+			
 		} catch (ProdutoJaExistenteException e) {
 			String mensagemErro = ManagedBeanUtil.getMensagemDoMessageBundle("produtoJaExistente", this.produto.getNome());
-			ManagedBeanUtil.enviaMensagemErro(null, mensagemErro, null);
-			e.printStackTrace();
+			ManagedBeanUtil.enviaMensagemErro(null, mensagemErro, null);			
 			return; //manter valores na tela
 		}		
 		

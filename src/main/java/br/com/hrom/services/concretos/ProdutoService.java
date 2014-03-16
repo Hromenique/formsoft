@@ -14,6 +14,8 @@ import br.com.hrom.utils.Transacional;
 
 /**
  * 
+ * Classe que mantém as regras de negócio que envolve a entidade Produto
+ * 
  * @author Hromenique Cezniowscki Leite Batista
  * @version 1.0
  * 

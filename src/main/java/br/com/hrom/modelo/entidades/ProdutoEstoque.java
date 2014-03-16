@@ -199,5 +199,14 @@ public class ProdutoEstoque implements Serializable {
 		} else if (!validade.equals(other.validade))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "ProdutoEstoque [codProdutoEstoque=" + codProdutoEstoque
+				+ ", lote=" + lote + ", quantidadeInicial=" + quantidadeInicial
+				+ ", quantidadeAtual=" + quantidadeAtual + ", fabricacao="
+				+ fabricacao + ", validade=" + validade + ", dataInclusao="
+				+ dataInclusao + ", produto=" + produto + "]";
 	}		
 }

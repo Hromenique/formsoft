@@ -29,11 +29,10 @@ public class ProdutoDAO extends AbstractGenericDAO<Produto> implements IProdutoD
 	}	
 	
 	@Override
-	public List<Produto> buscaProdutosPorNome(String nomeProduto) {
-		String nomeBuscado = "%"+nomeProduto+"%";
+	public List<Produto> buscaProdutosPorNome(String nomeProduto) {		
 		String sql = "SELECT produto FROM Produto produto WHERE produto.nome LIKE %?0%";
 		TypedQuery<Produto> query = getEntityManager().createQuery(sql, Produto.class);
-		List<Produto> resultList = query.setParameter(0, nomeBuscado).getResultList();		
+		List<Produto> resultList = query.setParameter(0, nomeProduto).getResultList();		
 		
 		return resultList;
 	}

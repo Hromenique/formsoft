@@ -1,10 +1,13 @@
 package br.com.hrom.managedbeans;
 
+import java.io.Serializable;
 import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.hrom.exceptions.services.ProdutoEstoqueInvalidoException;
 import br.com.hrom.modelo.entidades.Produto;
 import br.com.hrom.modelo.entidades.ProdutoEstoque;
 import br.com.hrom.services.interfaces.IProdutoEstoqueService;
@@ -19,21 +22,24 @@ import br.com.hrom.utils.ManagedBeanUtil;
  */
 
 @Named
-public class LoteMB {
+@RequestScoped
+public class LoteMB implements Serializable {
 	
-	private String nomeProduto;
-	private ProdutoEstoque prodEstoque;
+	private static final long serialVersionUID = 1L;
+	
+	private String nomeProduto = "";
+	private ProdutoEstoque prodEstoqueEdicao;
 	private Produto produtoSelecionado;
 	private List<Produto> produtos;
 	
-	
+	@Inject
 	private IProdutoService produtoService;
 	
-	
+	@Inject
 	private IProdutoEstoqueService produtoEstoqueService;
 	
 	public LoteMB(){
-		
+		this.prodEstoqueEdicao = new ProdutoEstoque();
 	}
 	
 	public void buscaProdutoPorNome(){
@@ -45,17 +51,19 @@ public class LoteMB {
 	}
 	
 	public void cadastraLoteProduto(){
-		this.prodEstoque.setProduto(this.produtoSelecionado);		
-		produtoEstoqueService.cadastraProdutoEstoque(this.prodEstoque);	
-		ManagedBeanUtil.enviaMensagemInfo(null, "Lote cadastrado com sucesso!", null);
-		iniciaCampos();
-	}
-
-	private void iniciaCampos() {
-		this.prodEstoque = new ProdutoEstoque();
-		this.nomeProduto = "";
-		this.produtoSelecionado = null;
-		this.produtos = null;		
+		this.prodEstoqueEdicao.setProduto(this.produtoSelecionado);	
+		
+		try {
+			produtoEstoqueService.cadastraProdutoEstoque(this.produtoSelecionado, this.prodEstoqueEdicao);
+		} 
+		catch (ProdutoEstoqueInvalidoException exception) {
+			ProdutoEstoque prodEstoqueCadastrado = exception.getProdutoEstoqueCadastrado();
+			String validade = (prodEstoqueCadastrado.getValidade() == null) ? null : ManagedBeanUtil.formataData(prodEstoqueCadastrado.getValidade()) ;
+			String fabricacao = (prodEstoqueCadastrado.getFabricacao() == null) ? null : ManagedBeanUtil.formataData(prodEstoqueCadastrado.getFabricacao());
+			String mensagem = ManagedBeanUtil.getMensagemDoMessageBundle("loteInvalido", fabricacao, validade);
+			
+			ManagedBeanUtil.enviaMensagemErro(null, mensagem, null);			
+		}	
 	}
 
 	public String getNomeProduto() {
@@ -66,12 +74,12 @@ public class LoteMB {
 		this.nomeProduto = nomeProduto;
 	}
 
-	public ProdutoEstoque getProdEstoque() {
-		return prodEstoque;
+	public ProdutoEstoque getProdEstoqueEdicao() {
+		return prodEstoqueEdicao;
 	}
 
-	public void setProdEstoque(ProdutoEstoque prodEstoque) {
-		this.prodEstoque = prodEstoque;
+	public void setProdEstoqueEdicao(ProdutoEstoque prodEstoqueEdicao) {
+		this.prodEstoqueEdicao = prodEstoqueEdicao;
 	}
 
 	public Produto getProdutoSelecionado() {
@@ -88,5 +96,7 @@ public class LoteMB {
 
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
-	}
+	}	
+
+
 }

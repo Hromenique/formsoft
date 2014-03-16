@@ -24,11 +24,26 @@ public class TransacionalInterceptor {
 	
 	@AroundInvoke
 	public Object intercepta(InvocationContext context) throws Exception {
-		System.out.println("abrir transação");
-		entityManager.getTransaction().begin();
-		Object resultado = context.proceed();
-		entityManager.getTransaction().commit();
-		System.out.println("fechar transação");
+		Object resultado = null;				
+		
+		try{
+			System.out.println("abrir transação");	
+			entityManager.getTransaction().begin();
+			
+			resultado = context.proceed();
+			
+			System.out.println("fechar transação");
+			entityManager.getTransaction().commit();
+		}
+		catch(Exception exception){			
+			if (entityManager.getTransaction().isActive()) {
+				System.out.println("rollback da transação");
+				entityManager.getTransaction().rollback();
+			}
+			
+			throw exception;			
+		}		
+		
 		return resultado;
 	}
 }

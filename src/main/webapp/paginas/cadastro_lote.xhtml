@@ -15,21 +15,30 @@ Registrar novo lote de um produto
   
 	<ui:composition template="/templates/principal.xhtml">	
 		<ui:define name="centro">		
-			<h:panelGrid columns="2">
-				<p:outputLabel for="produto" value="#{campo.inputProduto}:" />  
-				<p:inputText id="produto" value="#{loteMB.nomeProduto}"  required="true" />
+			<h:form>			
+				<h:panelGrid columns="2">
+					<p:outputLabel for="produto" value="#{campo.inputProduto}:" />  
+					<p:inputText id="produto" value="#{loteMB.nomeProduto}"  required="true" />
+					
+					<p:commandButton  value="#{campo.btBuscar}" actionListener="#{loteMB.buscaProdutoPorNome}" update="gridProdutos"/>				
+				</h:panelGrid>
 				
-				<p:commandButton  value="#{campo.btBuscar}" actionListener="#{loteMB.buscaProdutoPorNome}" update="gridProdutos"/>				
-			</h:panelGrid>
-			
-			<p:dataTable id="gridProdutos">
-			
-			
-			</p:dataTable>
-			
-			
-							
-	
+				<!-- Produtos -->
+				<p:dataTable id="gridProdutos" value="#{loteMB.produtos}"  var="produto">
+					<p:column headerText="#{campo.codigo}">
+						<h:outputText value="#{produto.codProduto}"/>
+					</p:column>				
+					<p:column headerText="#{campo.produto}">
+						<h:outputText value="#{produto.nome}"/>
+					</p:column>
+					<p:column headerText="#{campo.fabricante}">
+						<h:outputText value="#{produto.fabricante}"/>
+					</p:column>	
+					<p:column>
+						<h:outputText value="#{campo.btSelecionar}"/>
+					</p:column>		
+				</p:dataTable>			
+			</h:form>	
 		</ui:define>	
 	</ui:composition>
 </html>
