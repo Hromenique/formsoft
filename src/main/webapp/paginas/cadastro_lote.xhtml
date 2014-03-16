@@ -9,22 +9,24 @@ Registrar novo lote de um produto
 
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"> 
 
   
 	<ui:composition template="/templates/principal.xhtml">	
 		<ui:define name="centro">		
-			<h:form>			
-				<h:panelGrid columns="2">
+			<h:form id="form1" prependId="false">			
+				<h:panelGrid columns="3">
 					<p:outputLabel for="produto" value="#{campo.inputProduto}:" />  
-					<p:inputText id="produto" value="#{loteMB.nomeProduto}"  required="true" />
-					
-					<p:commandButton  value="#{campo.btBuscar}" actionListener="#{loteMB.buscaProdutoPorNome}" update="gridProdutos"/>				
-				</h:panelGrid>
-				
-				<!-- Produtos -->
-				<p:dataTable id="gridProdutos" value="#{loteMB.produtos}"  var="produto">
+					<p:inputText id="produto" value="#{loteMB.nomeProduto}"  required="true" />					
+					<p:commandButton  value="#{campo.btBuscar}" actionListener="#{loteMB.buscaProdutosPorNome}" update="form1 :form2" />				
+				</h:panelGrid>						
+			</h:form>
+			
+			<h:form id="form2" prependId="false">
+				<!-- Produtos encontrados-->
+				<p:dataTable id="gridProdutos" value="#{loteMB.produtos}" var="produto"  rendered="#{not empty loteMB.produtos}" >
 					<p:column headerText="#{campo.codigo}">
 						<h:outputText value="#{produto.codProduto}"/>
 					</p:column>				
@@ -35,10 +37,15 @@ Registrar novo lote de um produto
 						<h:outputText value="#{produto.fabricante}"/>
 					</p:column>	
 					<p:column>
-						<h:outputText value="#{campo.btSelecionar}"/>
+						<p:commandButton  value="#{campo.btSelecionar}">
+							<f:setPropertyActionListener value="#{produto}" target="#{loteMB.produtoSelecionado}"/>
+						</p:commandButton>							
 					</p:column>		
-				</p:dataTable>			
-			</h:form>	
+				</p:dataTable>
+				<!-- Produtos não encontrados -->	
+				<p:messages id="sem_produtos" showDetail="false" showSummary="true" globalOnly="false" redisplay="true"/>													
+			</h:form>			
+			
 		</ui:define>	
 	</ui:composition>
 </html>

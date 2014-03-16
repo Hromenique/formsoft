@@ -1,6 +1,7 @@
 package br.com.hrom.managedbeans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
@@ -40,14 +41,14 @@ public class LoteMB implements Serializable {
 	
 	public LoteMB(){
 		this.prodEstoqueEdicao = new ProdutoEstoque();
+		this.produtos = new ArrayList<Produto>();
 	}
 	
-	public void buscaProdutoPorNome(){
-		this.produtos = produtoService.buscaProdutoPorNome(this.nomeProduto);		
-	}
-	
-	public void selecionaProdutoNaLista(){
-		
+	public void buscaProdutosPorNome(){
+		this.produtos = produtoService.buscaProdutosPorNome(this.nomeProduto);	
+		if(produtos.size() == 0){
+			ManagedBeanUtil.enviaMensagemAlerta("sem_produto", ManagedBeanUtil.getMensagemDoMessageBundle("produtosNaoEncontrados"), null);
+		}
 	}
 	
 	public void cadastraLoteProduto(){
@@ -64,6 +65,12 @@ public class LoteMB implements Serializable {
 			
 			ManagedBeanUtil.enviaMensagemErro(null, mensagem, null);			
 		}	
+	}
+	
+	public boolean getExisteProdutos(){
+		boolean resultado = (this.produtos == null) ? false : (this.produtos.size() > 0);
+		System.out.println(resultado);
+		return resultado;
 	}
 
 	public String getNomeProduto() {
@@ -96,7 +103,5 @@ public class LoteMB implements Serializable {
 
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
-	}	
-
-
+	}
 }

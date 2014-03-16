@@ -58,7 +58,7 @@ public class ProdutoService implements Serializable, IProdutoService {
 	}
 	
 	@Override
-	public List<Produto> buscaProdutoPorNome(String nome) {
+	public List<Produto> buscaProdutosPorNome(String nome) {
 		List<Produto> produtos = dao.buscaProdutosPorNome(nome);
 		return produtos;
 	}

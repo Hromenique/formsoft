@@ -16,7 +16,7 @@ Registrar novo Produto
 	<ui:composition template="/templates/principal.xhtml">	
 		<ui:define name="centro">			
 			
-			<h:form>				
+			<h:form prependId="false">				
 			    <p:messages id="messages" showDetail="false" autoUpdate="true" redisplay="true" /> 
 				<h:panelGrid id="grid" columns = "2">
 					<p:outputLabel for="nome_produto" value="#{campo.inputProduto}:" />  

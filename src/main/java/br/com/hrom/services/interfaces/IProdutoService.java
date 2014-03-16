@@ -13,6 +13,6 @@ public interface IProdutoService {
 
 	public abstract Produto buscaProdutoPorId(long idProduto);
 
-	public abstract List<Produto> buscaProdutoPorNome(String nome);
+	public abstract List<Produto> buscaProdutosPorNome(String nome);
 
 }

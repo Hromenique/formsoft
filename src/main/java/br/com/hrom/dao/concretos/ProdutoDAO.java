@@ -30,17 +30,17 @@ public class ProdutoDAO extends AbstractGenericDAO<Produto> implements IProdutoD
 	
 	@Override
 	public List<Produto> buscaProdutosPorNome(String nomeProduto) {		
-		String sql = "SELECT produto FROM Produto produto WHERE produto.nome LIKE %?0%";
+		String sql = "SELECT produto FROM Produto produto WHERE LOWER(produto.nome) LIKE ?0";
 		TypedQuery<Produto> query = getEntityManager().createQuery(sql, Produto.class);
-		List<Produto> resultList = query.setParameter(0, nomeProduto).getResultList();		
+		List<Produto> resultList = query.setParameter(0, "%"+nomeProduto.toLowerCase()+"%").getResultList();		
 		
 		return resultList;
 	}
 
 	@Override
 	public Produto buscaProdutoPorNome(String nomeProduto) {		
-		String sql = "SELECT produto FROM Produto produto WHERE produto.nome = ?0";
-		List<Produto> produtos = getEntityManager().createQuery(sql, Produto.class).setParameter(0, nomeProduto).getResultList();
+		String sql = "SELECT produto FROM Produto produto WHERE LOWER(produto.nome) = ?0";
+		List<Produto> produtos = getEntityManager().createQuery(sql, Produto.class).setParameter(0, nomeProduto.toLowerCase()).getResultList();
 		
 		return (produtos.size() > 0) ? produtos.get(0) : null;
 	}
