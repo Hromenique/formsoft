@@ -20,13 +20,13 @@ Registrar novo lote de um produto
 				<h:panelGrid columns="3">
 					<p:outputLabel for="produto" value="#{campo.inputProduto}:" />  
 					<p:inputText id="produto" value="#{loteMB.nomeProduto}"  required="true" />					
-					<p:commandButton  value="#{campo.btBuscar}" actionListener="#{loteMB.buscaProdutosPorNome}" update="form1 :form2" />				
+					<p:commandButton  value="#{campo.btBuscar}" actionListener="#{loteMB.buscaProdutosPorNome}" update=":form2" />				
 				</h:panelGrid>						
 			</h:form>
 			
 			<h:form id="form2" prependId="false">
 				<!-- Produtos encontrados-->
-				<p:dataTable id="gridProdutos" value="#{loteMB.produtos}" var="produto"  rendered="#{not empty loteMB.produtos}" >
+				<p:dataTable id="gridProdutos" value="#{loteMB.produtos}" var="produto" rowKey="#{produto.codProduto}"  selectionMode="single" selection="#{loteMB.produtoSelecionado}" rendered="#{not empty loteMB.produtos}">
 					<p:column headerText="#{campo.codigo}">
 						<h:outputText value="#{produto.codProduto}"/>
 					</p:column>				
@@ -35,16 +35,37 @@ Registrar novo lote de um produto
 					</p:column>
 					<p:column headerText="#{campo.fabricante}">
 						<h:outputText value="#{produto.fabricante}"/>
-					</p:column>	
-					<p:column>
-						<p:commandButton  value="#{campo.btSelecionar}">
-							<f:setPropertyActionListener value="#{produto}" target="#{loteMB.produtoSelecionado}"/>
-						</p:commandButton>							
 					</p:column>		
+					<p:column>
+						<p:commandButton id="viewBtn" value="#{campo.btnVisualizar}" icon="ui-icon-search" oncomplete="PF('produtoSelecionadoDialog').show()" update=":form3">
+							<f:setPropertyActionListener value="#{produto}" target="#{loteMB.produtoVisualizado}" />							
+						</p:commandButton>
+					</p:column>				
 				</p:dataTable>
 				<!-- Produtos não encontrados -->	
-				<p:messages id="sem_produtos" showDetail="false" showSummary="true" globalOnly="false" redisplay="true"/>													
-			</h:form>			
+				<p:messages id="sem_produtos" showDetail="false" showSummary="true" globalOnly="false" redisplay="true"/>															
+			</h:form>	
+			
+			<!-- Visualização do Produto selecionado. Ativado apenas quando o botão 'Visualizar' for ativado -->
+			<h:form id="form3" prependId="false">
+				<p:dialog header="#{campo.detalhesProduto}" widgetVar="produtoSelecionadoDialog" resizable="false" modal="true" showEffect="fade" hideEffect="fade" closeOnEscape="true"  draggable="false" >
+					<h:panelGrid id="grid" columns = "2">
+						<h:outputLabel for="nome_produto" value="#{campo.inputProduto}:" />  
+						<h:outputText id="nome_produto" value="#{loteMB.produtoVisualizado.nome}"/>  
+						
+						<h:outputLabel for="fabricante" value="#{campo.inputFabricante}:" />  
+						<h:outputText id="fabricante" value="#{loteMB.produtoVisualizado.fabricante}"/> 
+						
+						<h:outputLabel for="quant_minima" value="#{campo.inputQuantMin}:" />  
+						<h:outputText id="quant_minima" value="#{loteMB.produtoVisualizado.quantidadeMinima}" /> 
+						
+						<h:outputLabel for="descricao" value="#{campo.inputDescricao}:" /> 
+						<h:outputText id="descricao" value="#{loteMB.produtoVisualizado.descricao}"/>
+					</h:panelGrid>				
+				</p:dialog>		
+			</h:form>	
+			
+			
 			
 		</ui:define>	
 	</ui:composition>

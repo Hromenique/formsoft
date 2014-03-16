@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -23,7 +23,7 @@ import br.com.hrom.utils.ManagedBeanUtil;
  */
 
 @Named
-@RequestScoped
+@SessionScoped
 public class LoteMB implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -31,6 +31,7 @@ public class LoteMB implements Serializable {
 	private String nomeProduto = "";
 	private ProdutoEstoque prodEstoqueEdicao;
 	private Produto produtoSelecionado;
+	private Produto produtoVisualizado;
 	private List<Produto> produtos;
 	
 	@Inject
@@ -60,17 +61,10 @@ public class LoteMB implements Serializable {
 		catch (ProdutoEstoqueInvalidoException exception) {
 			ProdutoEstoque prodEstoqueCadastrado = exception.getProdutoEstoqueCadastrado();
 			String validade = (prodEstoqueCadastrado.getValidade() == null) ? null : ManagedBeanUtil.formataData(prodEstoqueCadastrado.getValidade()) ;
-			String fabricacao = (prodEstoqueCadastrado.getFabricacao() == null) ? null : ManagedBeanUtil.formataData(prodEstoqueCadastrado.getFabricacao());
-			String mensagem = ManagedBeanUtil.getMensagemDoMessageBundle("loteInvalido", fabricacao, validade);
+			String fabricacao = (prodEstoqueCadastrado.getFabricacao() == null) ? null : ManagedBeanUtil.formataData(prodEstoqueCadastrado.getFabricacao());		
 			
-			ManagedBeanUtil.enviaMensagemErro(null, mensagem, null);			
+			ManagedBeanUtil.enviaMensagemErro(null, ManagedBeanUtil.getMensagemDoMessageBundle("loteInvalido", fabricacao, validade), null);			
 		}	
-	}
-	
-	public boolean getExisteProdutos(){
-		boolean resultado = (this.produtos == null) ? false : (this.produtos.size() > 0);
-		System.out.println(resultado);
-		return resultado;
 	}
 
 	public String getNomeProduto() {
@@ -103,5 +97,13 @@ public class LoteMB implements Serializable {
 
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
+	}
+
+	public Produto getProdutoVisualizado() {
+		return produtoVisualizado;
+	}
+
+	public void setProdutoVisualizado(Produto produtoVisualizado) {
+		this.produtoVisualizado = produtoVisualizado;
 	}
 }

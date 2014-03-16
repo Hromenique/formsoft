@@ -51,8 +51,7 @@ public class ManagedBeanUtil {
 
 	public static void enviaMensagemFatal(String destino, String sumario, String descricao){
 		enviaMensagem(FacesMessage.SEVERITY_FATAL, destino, sumario, descricao );
-	}
-	
+	}	
 	
 	private static void enviaMensagem(FacesMessage.Severity severidade,String destino, String sumario, String descricao ){
 		FacesContext.getCurrentInstance().addMessage(destino, new FacesMessage(severidade, sumario, descricao));
