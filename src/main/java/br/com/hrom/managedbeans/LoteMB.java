@@ -1,10 +1,10 @@
 package br.com.hrom.managedbeans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -41,18 +41,26 @@ public class LoteMB implements Serializable {
 	private IProdutoEstoqueService produtoEstoqueService;
 	
 	public LoteMB(){
-		this.prodEstoqueEdicao = new ProdutoEstoque();
-		this.produtos = new ArrayList<Produto>();
+		this.prodEstoqueEdicao = new ProdutoEstoque();		
 	}
 	
 	public void buscaProdutosPorNome(){
+		//Nova busca, deselecionar o produto
+		this.produtoSelecionado = null;
+		
 		this.produtos = produtoService.buscaProdutosPorNome(this.nomeProduto);	
-		if(produtos.size() == 0){
-			ManagedBeanUtil.enviaMensagemAlerta("sem_produto", ManagedBeanUtil.getMensagemDoMessageBundle("produtosNaoEncontrados"), null);
+		if(produtos.size() == 0){			
+			ManagedBeanUtil.enviaMensagemAlerta(null, ManagedBeanUtil.getMensagemDoMessageBundle("produtosNaoEncontrados"), null);
 		}
 	}
 	
-	public void cadastraLoteProduto(){
+	public void cadastraLoteProduto(ActionEvent event){
+		
+		if(!dataValidadeValida()){
+			ManagedBeanUtil.enviaMensagemErro(null, ManagedBeanUtil.getMensagemDoMessageBundle("validadeInvalida"), null);
+			return;
+		}		
+		
 		this.prodEstoqueEdicao.setProduto(this.produtoSelecionado);	
 		
 		try {
@@ -66,7 +74,22 @@ public class LoteMB implements Serializable {
 			ManagedBeanUtil.enviaMensagemErro(null, ManagedBeanUtil.getMensagemDoMessageBundle("loteInvalido", fabricacao, validade), null);			
 		}	
 	}
+	
+	/**
+	public boolean getProdutosNaoPopulado(){
+		return (this.produtos == null) ? true : (this.produtos.size() == 0);
+	}*/
 
+	private boolean dataValidadeValida() {
+		if (this.prodEstoqueEdicao.getValidade() != null) {
+			if (this.prodEstoqueEdicao.getValidade().compareTo(this.prodEstoqueEdicao.getFabricacao()) <= 0) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
 	public String getNomeProduto() {
 		return nomeProduto;
 	}

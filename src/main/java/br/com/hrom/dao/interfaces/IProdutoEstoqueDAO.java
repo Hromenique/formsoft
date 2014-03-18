@@ -12,5 +12,5 @@ import br.com.hrom.modelo.entidades.ProdutoEstoque;
 
 public interface IProdutoEstoqueDAO extends GenericDAO<ProdutoEstoque>{	
 
-	public ProdutoEstoque buscaProdutoEstoque(Produto produto, int lote);
+	public ProdutoEstoque buscaProdutoEstoque(Produto produto, String lote);
 }

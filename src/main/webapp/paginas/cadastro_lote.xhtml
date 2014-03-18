@@ -16,18 +16,22 @@ Registrar novo lote de um produto
   
 	<ui:composition template="/templates/principal.xhtml">	
 		<ui:define name="centro">		
+			<p:messages id="messages" showDetail="false" globalOnly="false" autoUpdate="true" redisplay="true" /> 
 			<h:form id="form1" prependId="false">			
 				<h:panelGrid columns="3">
 					<p:outputLabel for="produto" value="#{campo.inputProduto}:" />  
 					<p:inputText id="produto" value="#{loteMB.nomeProduto}"  required="true" />					
-					<p:commandButton  value="#{campo.btBuscar}" actionListener="#{loteMB.buscaProdutosPorNome}" update=":form2" />				
+					<p:commandButton  value="#{campo.btBuscar}" actionListener="#{loteMB.buscaProdutosPorNome}" update=":form2 :form4" />				
 				</h:panelGrid>						
 			</h:form>
 			
 			<h:form id="form2" prependId="false">
 				<!-- Produtos encontrados-->
-				<p:dataTable id="gridProdutos" value="#{loteMB.produtos}" var="produto" rowKey="#{produto.codProduto}"  selectionMode="single" selection="#{loteMB.produtoSelecionado}" rendered="#{not empty loteMB.produtos}">
-					<p:column headerText="#{campo.codigo}">
+				<p:dataTable id="gridProdutos" value="#{loteMB.produtos}" var="produto" rowKey="#{produto.codProduto}" selectionMode="single" selection="#{loteMB.produtoSelecionado}" rendered="#{not empty loteMB.produtos}" >
+					<!-- Ajax para seleção -->
+					<p:ajax event="rowSelect" update=":form4"  />					
+					
+					<p:column headerText="#{campo.codigo}" >
 						<h:outputText value="#{produto.codProduto}"/>
 					</p:column>				
 					<p:column headerText="#{campo.produto}">
@@ -37,19 +41,18 @@ Registrar novo lote de um produto
 						<h:outputText value="#{produto.fabricante}"/>
 					</p:column>		
 					<p:column>
+						<!-- Ativa o Dialog de visualização de dados do Produto -->
 						<p:commandButton id="viewBtn" value="#{campo.btnVisualizar}" icon="ui-icon-search" oncomplete="PF('produtoSelecionadoDialog').show()" update=":form3">
 							<f:setPropertyActionListener value="#{produto}" target="#{loteMB.produtoVisualizado}" />							
 						</p:commandButton>
 					</p:column>				
-				</p:dataTable>
-				<!-- Produtos não encontrados -->	
-				<p:messages id="sem_produtos" showDetail="false" showSummary="true" globalOnly="false" redisplay="true"/>															
+				</p:dataTable>																						
 			</h:form>	
 			
-			<!-- Visualização do Produto selecionado. Ativado apenas quando o botão 'Visualizar' for ativado -->
+			<!-- Visualização dos dados do produto. Ativado pelo botão Visualizar -->
 			<h:form id="form3" prependId="false">
 				<p:dialog header="#{campo.detalhesProduto}" widgetVar="produtoSelecionadoDialog" resizable="false" modal="true" showEffect="fade" hideEffect="fade" closeOnEscape="true"  draggable="false" >
-					<h:panelGrid id="grid" columns = "2">
+					<h:panelGrid id="gridVisualizacaoProduto" columns = "2">
 						<h:outputLabel for="nome_produto" value="#{campo.inputProduto}:" />  
 						<h:outputText id="nome_produto" value="#{loteMB.produtoVisualizado.nome}"/>  
 						
@@ -65,7 +68,26 @@ Registrar novo lote de um produto
 				</p:dialog>		
 			</h:form>	
 			
+			<!-- Cadastro do lote do produto -->
+			<h:form id="form4" prependId="false">
 			
+				<h:panelGrid id="gridEdicaoLote" columns = "2" rendered="#{not empty loteMB.produtoSelecionado}">
+					<p:outputLabel for="lote" value="#{campo.inputLote}:" />  
+					<p:inputText id="lote" value="#{loteMB.prodEstoqueEdicao.lote}"  required="true" />  
+					
+					<p:outputLabel for="quantidade" value="#{campo.inputQuantidade}:" />  
+					<p:inputText id="quantidade" value="#{loteMB.prodEstoqueEdicao.quantidadeInicial}"  required="true" /> 
+					
+					<p:outputLabel for="fabricacao" value="#{campo.inputDtFabricacao}:"/>
+					<p:calendar id="fabricacao" value="#{loteMB.prodEstoqueEdicao.fabricacao}" showOn="button" required="true"/>
+					
+					<p:outputLabel for="validade" value="#{campo.inputDtValidade}:"/>
+					<p:calendar id="validade"  value="#{loteMB.prodEstoqueEdicao.validade}" showOn="button"/>
+				
+					<p:commandButton value="#{campo.btnLimpar}" type="reset" /> 
+					<p:commandButton value="#{campo.btnSalvar}" actionListener="#{loteMB.cadastraLoteProduto}" />
+				</h:panelGrid>					
+			</h:form>		
 			
 		</ui:define>	
 	</ui:composition>

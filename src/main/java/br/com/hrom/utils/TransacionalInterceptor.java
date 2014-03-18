@@ -1,5 +1,7 @@
 package br.com.hrom.utils;
 
+import java.io.Serializable;
+
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
@@ -17,7 +19,9 @@ import javax.persistence.EntityManager;
 
 @Interceptor
 @Transacional
-public class TransacionalInterceptor {
+public class TransacionalInterceptor implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	
 	@Inject
 	EntityManager entityManager;

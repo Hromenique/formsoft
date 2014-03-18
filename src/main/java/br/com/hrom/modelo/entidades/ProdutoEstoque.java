@@ -35,8 +35,8 @@ public class ProdutoEstoque implements Serializable {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="prod_estoque_sequence")
 	private long codProdutoEstoque;	
 	
-	@Column(nullable = false)
-	private int lote;	
+	@Column(nullable = false, length=15)
+	private String lote;	
 	
 	@Column(name="quant_inicial",nullable=false)
 	private int quantidadeInicial;
@@ -61,20 +61,19 @@ public class ProdutoEstoque implements Serializable {
 	private Produto produto;	
 	
 	public ProdutoEstoque(){
+		this.dataInclusao = new Date();
 		
 	}
 
-	public ProdutoEstoque(long codProdutoEstoque, int lote,
-			int quantidadeInicial, int quantidadeAtual, Date fabricacao,
-			Date validade, Date dataInclusao, Produto produto) {
+	public ProdutoEstoque(long codProdutoEstoque, String lote, int quantidadeInicial, Date fabricacao, Date validade, Produto produto) {
 		super();
 		this.codProdutoEstoque = codProdutoEstoque;
 		this.lote = lote;
 		this.quantidadeInicial = quantidadeInicial;
-		this.quantidadeAtual = quantidadeAtual;
+		this.quantidadeAtual = quantidadeInicial;
 		this.fabricacao = fabricacao;
 		this.validade = validade;
-		this.dataInclusao = dataInclusao;
+		this.dataInclusao = new Date();
 		this.produto = produto;
 	}
 
@@ -86,11 +85,11 @@ public class ProdutoEstoque implements Serializable {
 		this.codProdutoEstoque = codProdutoEstoque;
 	}
 
-	public int getLote() {
+	public String getLote() {
 		return lote;
 	}
 
-	public void setLote(int lote) {
+	public void setLote(String lote) {
 		this.lote = lote;
 	}
 
@@ -152,7 +151,7 @@ public class ProdutoEstoque implements Serializable {
 				+ ((dataInclusao == null) ? 0 : dataInclusao.hashCode());
 		result = prime * result
 				+ ((fabricacao == null) ? 0 : fabricacao.hashCode());
-		result = prime * result + lote;
+		result = prime * result + ((lote == null) ? 0 : lote.hashCode());
 		result = prime * result + ((produto == null) ? 0 : produto.hashCode());
 		result = prime * result + quantidadeAtual;
 		result = prime * result + quantidadeInicial;
@@ -182,7 +181,10 @@ public class ProdutoEstoque implements Serializable {
 				return false;
 		} else if (!fabricacao.equals(other.fabricacao))
 			return false;
-		if (lote != other.lote)
+		if (lote == null) {
+			if (other.lote != null)
+				return false;
+		} else if (!lote.equals(other.lote))
 			return false;
 		if (produto == null) {
 			if (other.produto != null)
@@ -199,14 +201,5 @@ public class ProdutoEstoque implements Serializable {
 		} else if (!validade.equals(other.validade))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "ProdutoEstoque [codProdutoEstoque=" + codProdutoEstoque
-				+ ", lote=" + lote + ", quantidadeInicial=" + quantidadeInicial
-				+ ", quantidadeAtual=" + quantidadeAtual + ", fabricacao="
-				+ fabricacao + ", validade=" + validade + ", dataInclusao="
-				+ dataInclusao + ", produto=" + produto + "]";
-	}		
+	}	
 }
