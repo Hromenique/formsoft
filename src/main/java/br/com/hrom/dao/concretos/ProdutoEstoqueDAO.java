@@ -26,14 +26,10 @@ public class ProdutoEstoqueDAO extends AbstractGenericDAO<ProdutoEstoque> implem
 	}
 
 	@Override
-	public ProdutoEstoque buscaProdutoEstoque(Produto produto, int lote) {
+	public List<ProdutoEstoque> buscaProdutoEstoquePorLote(Produto produto, String lote) {
 		String sql = "SELECT produtoLote FROM ProdutoEstoque produtoLote WHERE produtoLote.lote = ?0 AND produtoLote.produto = ?1";
 		List<ProdutoEstoque> resultList = getEntityManager().createQuery(sql, ProdutoEstoque.class).setParameter(0, lote).setParameter(1, produto).getResultList();
-		
-		if(resultList.size() > 0){
-			return resultList.get(0);
-		}
-		
-		return null;
-	}
+				
+		return (resultList.size() > 0) ? resultList : null;
+	}	
 }

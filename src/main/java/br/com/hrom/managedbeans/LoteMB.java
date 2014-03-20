@@ -62,9 +62,10 @@ public class LoteMB implements Serializable {
 		}		
 		
 		this.prodEstoqueEdicao.setProduto(this.produtoSelecionado);	
+		this.prodEstoqueEdicao.setQuantidadeAtual(this.prodEstoqueEdicao.getQuantidadeInicial());
 		
 		try {
-			produtoEstoqueService.cadastraProdutoEstoque(this.produtoSelecionado, this.prodEstoqueEdicao);
+			produtoEstoqueService.cadastraProdutoEstoque(this.prodEstoqueEdicao);
 		} 
 		catch (ProdutoEstoqueInvalidoException exception) {
 			ProdutoEstoque prodEstoqueCadastrado = exception.getProdutoEstoqueCadastrado();
@@ -73,12 +74,7 @@ public class LoteMB implements Serializable {
 			
 			ManagedBeanUtil.enviaMensagemErro(null, ManagedBeanUtil.getMensagemDoMessageBundle("loteInvalido", fabricacao, validade), null);			
 		}	
-	}
-	
-	/**
-	public boolean getProdutosNaoPopulado(){
-		return (this.produtos == null) ? true : (this.produtos.size() == 0);
-	}*/
+	}	
 
 	private boolean dataValidadeValida() {
 		if (this.prodEstoqueEdicao.getValidade() != null) {

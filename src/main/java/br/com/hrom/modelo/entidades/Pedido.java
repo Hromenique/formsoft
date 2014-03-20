@@ -46,19 +46,18 @@ public class Pedido implements Serializable {
 	@Column(name="dt_entrega", nullable = true)
 	private Date dataEntrega;
 
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "cod_comprador", foreignKey = @ForeignKey(name="pedido_comprador_fkey"), nullable = false)
-	private Comprador comprador;
+	@Column(length=50, nullable=false)
+	private String comprador;
 
 	@OneToMany(mappedBy="pedido")
 	private List<ItemPedido> itensPedido;
 
 	public Pedido() {
 		this.itensPedido = new ArrayList<ItemPedido>();
-	}	
-	
+	}
+
 	public Pedido(long codPedido, Date dataCompra, Date dataEntrega,
-			Comprador comprador, List<ItemPedido> itensPedido) {
+			String comprador, List<ItemPedido> itensPedido) {
 		super();
 		this.codPedido = codPedido;
 		this.dataCompra = dataCompra;
@@ -91,20 +90,20 @@ public class Pedido implements Serializable {
 		this.dataEntrega = dataEntrega;
 	}
 
-	public Comprador getComprador() {
-		return comprador;
-	}
-
-	public void setComprador(Comprador comprador) {
-		this.comprador = comprador;
-	}
-
 	public List<ItemPedido> getItensPedido() {
 		return itensPedido;
 	}
 
 	public void setItensPedido(List<ItemPedido> itensPedido) {
 		this.itensPedido = itensPedido;
+	}
+
+	public String getComprador() {
+		return comprador;
+	}
+
+	public void setComprador(String comprador) {
+		this.comprador = comprador;
 	}
 
 	@Override
@@ -155,29 +154,5 @@ public class Pedido implements Serializable {
 		} else if (!itensPedido.equals(other.itensPedido))
 			return false;
 		return true;
-	}
-
-
-	/**
-	public void incluiProduto(Produto produto, int quantidade) {		
-		int indiceItemPedido = this.itensPedido.indexOf(produto);
-		
-		if(indiceItemPedido != -1){
-			aumentaQuantidadeItemPedido(this.itensPedido.get(indiceItemPedido), quantidade);
-		}else{
-			incluiNovoProdutoNoPedido(produto, quantidade);
-		}
-	}
-	
-	
-	private void incluiNovoProdutoNoPedido(Produto produto, int quantidade){
-		ItemPedido novoItemPedido = new ItemPedido(produto, this, quantidade);
-		this.itensPedido.add(novoItemPedido);
-	}
-	
-	private void aumentaQuantidadeItemPedido(ItemPedido item, int quantidadeParaSomar){
-		int quantidadeAtualizada= item.getQuantidade() + quantidadeParaSomar;
-		item.setQuantidade(quantidadeAtualizada);
-	}
-	*/	
+	}	
 }

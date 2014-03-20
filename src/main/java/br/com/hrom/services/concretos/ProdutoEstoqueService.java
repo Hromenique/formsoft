@@ -1,6 +1,8 @@
 package br.com.hrom.services.concretos;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.inject.Inject;
 
 import br.com.hrom.dao.interfaces.IProdutoEstoqueDAO;
@@ -32,12 +34,14 @@ public class ProdutoEstoqueService implements Serializable, IProdutoEstoqueServi
 
 	@Override
 	@Transacional
-	public void cadastraProdutoEstoque(Produto produto, ProdutoEstoque produtoEstoque) throws ProdutoEstoqueInvalidoException {
+	public void cadastraProdutoEstoque(ProdutoEstoque produtoEstoque) throws ProdutoEstoqueInvalidoException {
 		
-		ProdutoEstoque produtoEstoqueCadastradoNoBD = dao.buscaProdutoEstoque(produto, produtoEstoque.getLote());
-		if (produtoEstoqueCadastradoNoBD != null) {
-			if (!comparaIgualdadeProdutoEstoque(produtoEstoque,	produtoEstoqueCadastradoNoBD)) {
-				throw new ProdutoEstoqueInvalidoException("Objeto ProdutoEstoque inválido. ProdutoEstoque's com o mesmo lote devem possuir a mesma fabricacao e validade", produtoEstoqueCadastradoNoBD);
+		List<ProdutoEstoque> produtosEstoqueDoBD = dao.buscaProdutoEstoquePorLote(produtoEstoque.getProduto(), produtoEstoque.getLote());
+		
+		// Se o lote já existe no BD, verificar se é um lote válido
+		if (produtosEstoqueDoBD != null) {
+			if (!comparaIgualdadeProdutoEstoque(produtoEstoque,	produtosEstoqueDoBD.get(0))) {
+				throw new ProdutoEstoqueInvalidoException("Objeto ProdutoEstoque inválido. ProdutoEstoque's com o mesmo lote devem possuir a mesma fabricacao e validade", produtosEstoqueDoBD.get(0));
 			}
 		}
 		

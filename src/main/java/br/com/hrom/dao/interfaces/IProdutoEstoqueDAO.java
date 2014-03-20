@@ -1,5 +1,7 @@
 package br.com.hrom.dao.interfaces;
 
+import java.util.List;
+
 import br.com.hrom.modelo.entidades.Produto;
 import br.com.hrom.modelo.entidades.ProdutoEstoque;
 
@@ -12,5 +14,5 @@ import br.com.hrom.modelo.entidades.ProdutoEstoque;
 
 public interface IProdutoEstoqueDAO extends GenericDAO<ProdutoEstoque>{	
 
-	public ProdutoEstoque buscaProdutoEstoque(Produto produto, String lote);
+	public List<ProdutoEstoque> buscaProdutoEstoquePorLote(Produto produto, String lote);
 }

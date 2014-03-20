@@ -1,7 +1,6 @@
 package br.com.hrom.services.interfaces;
 
 import br.com.hrom.exceptions.services.ProdutoEstoqueInvalidoException;
-import br.com.hrom.modelo.entidades.Produto;
 import br.com.hrom.modelo.entidades.ProdutoEstoque;
 
 
@@ -15,5 +14,5 @@ import br.com.hrom.modelo.entidades.ProdutoEstoque;
  */
 public interface IProdutoEstoqueService {
 	
-	void cadastraProdutoEstoque(Produto produto, ProdutoEstoque produtoEstoque) throws ProdutoEstoqueInvalidoException;	
+	void cadastraProdutoEstoque(ProdutoEstoque produtoEstoque) throws ProdutoEstoqueInvalidoException;	
 }
