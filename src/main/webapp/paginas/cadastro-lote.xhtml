@@ -12,9 +12,11 @@ Registrar novo lote de um produto
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"> 
-
   
 	<ui:composition template="/templates/principal.xhtml">	
+		
+		<ui:param name="titulo" value="Cadastro Lote" />
+	
 		<ui:define name="centro">		
 			<p:messages id="messages" showDetail="false" globalOnly="false" autoUpdate="true" redisplay="true" /> 
 			<h:form id="form1" prependId="false">			

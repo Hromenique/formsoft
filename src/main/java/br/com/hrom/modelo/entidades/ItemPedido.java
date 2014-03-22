@@ -10,6 +10,7 @@ import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * 
@@ -35,10 +36,10 @@ public class ItemPedido implements Serializable{
 	@Id
     @ManyToOne(optional=false)
     @JoinColumn(name = "cod_produto_estoque", foreignKey= @ForeignKey(name = "item_pedido_produto_estoque_fkey"))
-	private ProdutoEstoque produtoEstoque;
+	private ProdutoEstoque produtoEstoque;	
 	
 	@Column(nullable=false)	
-	private int quantidade;	
+	private int quantidade;		
 	
 	public ItemPedido(){
 		
@@ -50,6 +51,14 @@ public class ItemPedido implements Serializable{
 		this.pedido = pedido;
 		this.produtoEstoque = produtoEstoque;
 		this.quantidade = quantidade;
+	}
+	
+	public String getLote(){
+		return this.produtoEstoque.getLote();
+	}
+	
+	public Produto getProduto(){
+		return this.produtoEstoque.getProduto();
 	}
 
 	public Pedido getPedido() {

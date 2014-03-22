@@ -1,0 +1,95 @@
+<!-- 
+@Author Hromenique Cezniowscki Leite Batista
+@Version 1.0
+ 
+Registrar novo lote de um produto
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"> 
+
+  
+	<ui:composition template="/templates/principal.xhtml">		
+		
+		<ui:param name="titulo" value="Cadastro Pedido"/>
+		
+		<ui:define name="centro">						
+			<script >
+				var produtoDetalhe = { 
+					nome : '',
+					fabricante : '',
+					quantMinima : 0,
+					descricao : ''};				
+				
+				function criaProdutoDetalhe(nome, fabricante, quantMinima, descricao){
+					alert(nome);
+					produtoDetalhe.nome = nome;
+					produtoDetalhe.fabricante = fabricante;
+					produtoDetalhe.quantMinima = quantMinima;
+					produtoDetalhe.descricao = descricao;
+				}		
+			</script>
+			
+			<p:messages id="messages" showDetail="false" globalOnly="false" autoUpdate="true" redisplay="true" /> 
+			
+			<h:form id="form1" prependId="false">			
+				<h:panelGrid columns="3">
+					<p:outputLabel for="produto" value="#{campo.inputProduto}:" />  
+					<p:inputText id="produto" value="#{cadastroPedidoMB.produtoBuscado}"  required="true" />					
+					<p:commandButton  value="#{campo.btBuscar}" actionListener="#{cadastroPedidoMB.buscaProdutosPorNome}" update=":form2"/>				
+				</h:panelGrid>						
+			</h:form>			
+			
+			<h:form id="form2" prependId="false">				
+				<p:dataTable id="gridProdutos" value="#{cadastroPedidoMB.produtos}" var="produto" rowKey="#{produto.codProduto}" selectionMode="single" 
+				selection="#{cadastroPedidoMB.produtoSelecionado}" >
+					
+					<!-- <p:ajax event="rowSelect" update=":form4"  /> -->					
+					
+					<p:column headerText="#{campo.codigo}" >
+						<h:outputText value="#{produto.codProduto}"/>
+					</p:column>				
+					<p:column headerText="#{campo.produto}">
+						<h:outputText value="#{produto.nome}"/>
+					</p:column>
+					<p:column headerText="#{campo.fabricante}">
+						<h:outputText value="#{produto.fabricante}"/>
+					</p:column>	
+					<p:column>
+						<!-- Ativa o Dialog de visualização de dados do Produto -->
+						<p:button id="viewBtn" value="#{campo.btnVisualizar}" icon="ui-icon-search" oncomplete="PF('produtoSelecionadoDialog').show()" 
+							onclick="criaProdutoDetalhe('#{produto.nome}', '#{produto.fabricante}', #{produto.quantidadeMinima}, '#{produto.descricao}')" />	
+						
+								
+					</p:column>												
+				</p:dataTable>																						
+			</h:form>
+			
+			<!-- Visualização dos dados do produto. Ativado pelo botão Visualizar -->
+			<h:form id="form3" prependId="false">
+				<p:dialog header="#{campo.detalhesProduto}" widgetVar="produtoSelecionadoDialog" resizable="false" modal="true" showEffect="fade" hideEffect="fade" closeOnEscape="true"  draggable="false" >
+					<h:panelGrid id="gridVisualizacaoProduto" columns = "2">
+						<h:outputLabel for="nome_produto" value="#{campo.inputProduto}:" />  
+						<h:outputText id="nome_produto" value="produtoDetalhe.nome"/>  
+						
+						<h:outputLabel for="fabricante" value="#{campo.inputFabricante}:" />  
+						<h:outputText id="fabricante" value="produtoDetalhe.fabricante"/> 
+						
+						<h:outputLabel for="quant_minima" value="#{campo.inputQuantMin}:" />  
+						<h:outputText id="quant_minima" value="produtoDetalhe.quantMinima" /> 
+						
+						<h:outputLabel for="descricao" value="#{campo.inputDescricao}:" /> 
+						<h:outputText id="descricao" value="produtoDetalhe.descricao"/>
+					</h:panelGrid>				
+				</p:dialog>		
+			</h:form>
+						
+		</ui:define>	
+	</ui:composition>
+</html>
+

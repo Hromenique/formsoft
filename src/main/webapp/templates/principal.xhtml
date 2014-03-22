@@ -13,63 +13,63 @@ Template Principal do sistema
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Formsoft</title>
-	<h:outputStylesheet library="css" name="principal.css"/>
-</h:head>
-
-<h:body> 
+	<h:head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Formsoft</title>
+		<h:outputStylesheet library="css" name="principal.css"/>
+	</h:head>
 	
-	<div class="cabecalho">
-		<div class="logo-secao">
-			Formsoft
+	<h:body> 
+		
+		<div class="cabecalho">
+			<div class="logo-secao">
+				Formsoft
+			</div>
+			<div class="info-usuario-sair">
+				
+				<h:outputLink value="url">
+					<h:graphicImage library="images" name="sair.png" />
+				</h:outputLink>
+			</div>		 
 		</div>
-		<div class="info-usuario-sair">
-			
-			<h:outputLink value="url">
-				<h:graphicImage library="images" name="sair.png" />
-			</h:outputLink>
-		</div>		 
-	</div>
-
-
-
-	<!-- Menu -->	
-	<div class="barra-menu">
-		<h:form>
-			<p:menubar>
-				<p:menuitem value="#{campo.inicio}" action="inicio" />
 	
-				<p:submenu label="#{campo.produto}">
-					<p:menuitem value="#{campo.cadastroProduto}" action="cadastro_produto" />
-					<p:menuitem value="#{campo.cadastroLote}" action="cadastro_lote" />
-				</p:submenu>
-				<p:submenu label="#{campo.pedido}">
-					<p:menuitem value="#{campo.cadastroPedido}" action="cadastro_pedido" />
-				</p:submenu>			
-				<p:submenu label="#{campo.relatorios}">
-					<p:menuitem value="#{campo.relPosicaoQuantFinanceiro}" action="relatorio_1" />
-					<p:menuitem value="#{campo.relProdutosAbaixoMinimo}" action="relatorio_2" />
-					<p:menuitem value="#{campo.relVendasEfetuadas}" action="relatorio_3" />
-				</p:submenu>
-			</p:menubar>
-		</h:form>
-	</div>
-
-	<!-- Seção dinâmica onde será inserido as funcionalidades -->
-	<div class="centro">
-		<ui:insert name="centro">
-			
-		</ui:insert>
-	</div>
-
-	<div class="rodape">
-		<p>Copyright &copy; 2014 Hromenique Cezniowscki Leite Batista. All
-			rights reserved</p>
-	</div>
-
-</h:body>
-
+		<!-- Menu -->	
+		<div class="barra-menu">
+			<h:form>
+				<p:menubar>
+					<p:menuitem value="#{campo.inicio}" action="inicio" />
+		
+					<p:submenu label="#{campo.produto}">
+						<p:menuitem value="#{campo.cadastroProduto}" action="cadastro-produto" />
+						<p:menuitem value="#{campo.cadastroLote}" action="cadastro-lote" />
+					</p:submenu>
+					<p:submenu label="#{campo.pedido}">
+						<p:menuitem value="#{campo.cadastroPedido}" action="cadastro-pedido" />
+					</p:submenu>			
+					<p:submenu label="#{campo.relatorios}">
+						<p:menuitem value="#{campo.relPosicaoQuantFinanceiro}" action="relatorio-1" />
+						<p:menuitem value="#{campo.relProdutosAbaixoMinimo}" action="relatorio-2" />
+						<p:menuitem value="#{campo.relVendasEfetuadas}" action="relatorio-3" />
+					</p:submenu>
+				</p:menubar>
+			</h:form>
+		</div>
+		
+		<!-- Título da página  -->
+		<h2 class="titulo">#{titulo}</h2>
+		
+		<!-- Seção dinâmica onde será inserido as funcionalidades -->
+		<div class="centro">
+			<ui:insert name="centro">
+				
+			</ui:insert>
+		</div>
+	
+		<div class="rodape">
+			<p>Copyright &copy; 2014 Hromenique Cezniowscki Leite Batista. All
+				rights reserved</p>
+		</div>
+	
+	</h:body>
 
 </html>
