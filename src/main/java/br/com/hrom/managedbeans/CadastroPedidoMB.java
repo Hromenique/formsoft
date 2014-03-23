@@ -64,7 +64,7 @@ public class CadastroPedidoMB implements Serializable{
 		this.lotes = produtoEstoqueService.buscaProdutoEstoquePorProduto(this.produtoSelecionado);
 	}
 	
-	public void incluirItemPedido(ActionEvent event){
+	public void incluiItemPedido(ActionEvent event){
 		this.itemPedidoEdicao.setProdutoEstoque(this.loteSelecionado);
 		this.itemPedidoEdicao.setPedido(this.pedidoEdicao);
 		this.itensPedido.add(itemPedidoEdicao);
@@ -73,6 +73,10 @@ public class CadastroPedidoMB implements Serializable{
 		this.lotes = null;
 		this.loteSelecionado = null;		
 	}
+	
+	public void excluiItemPedido(){
+		this.itensPedido.remove(this.itemPedidoEdicao);
+	}	
 	
 	public String getProdutoBuscado() {
 		return produtoBuscado;

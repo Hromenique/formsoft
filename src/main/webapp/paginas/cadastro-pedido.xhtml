@@ -113,7 +113,7 @@ Registrar novo lote de um produto
 					<p:outputLabel for="quantidade-item" value="#{campo.quantidade}:" />  
 					<p:inputText id="quantidade-item" value="#{cadastroPedidoMB.itemPedidoEdicao.quantidade}"  required="true" />				
 					
-					<p:commandButton value="#{campo.btnIncluir}" actionListener="#{cadastroPedidoMB.incluirItemPedido}" update=":formPedido form5 :form4" />
+					<p:commandButton value="#{campo.btnIncluir}" actionListener="#{cadastroPedidoMB.incluiItemPedido}" update=":formPedido form5 :form4" />
 				</h:panelGrid>				
 			</h:form>		
 				
@@ -128,11 +128,11 @@ Registrar novo lote de um produto
 					</p:column>	
 					<p:column headerText="#{campo.quantidade}">
 						<h:outputText value="#{item.quantidade}"/>
-					</p:column>		
-						<p:commandButton value="#{campo.btnEditar}" />
-						<p:commandButton value="#{campo.btnExcluir}" />
+					</p:column>							
 					<p:column>
-						
+						<p:commandButton value="#{campo.btnExcluir}" actionListener="#{cadastroPedidoMB.excluiItemPedido}" update=":formPedido">
+							<f:setPropertyActionListener value="#{item}" target="#{cadastroPedidoMB.itemPedidoEdicao}" />
+						</p:commandButton>
 					</p:column>								
 				</p:dataTable>											
 			</h:form>			
