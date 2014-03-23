@@ -21,7 +21,7 @@ Registrar novo lote de um produto
 			<p:messages id="messages" showDetail="false" globalOnly="false" autoUpdate="true" redisplay="true" /> 
 			<h:form id="form1" prependId="false">			
 				<h:panelGrid columns="3">
-					<p:outputLabel for="produto" value="#{campo.inputProduto}:" />  
+					<p:outputLabel for="produto" value="#{campo.produto}:" />  
 					<p:inputText id="produto" value="#{loteMB.nomeProduto}"  required="true" />					
 					<p:commandButton  value="#{campo.btBuscar}" actionListener="#{loteMB.buscaProdutosPorNome}" update=":form2 :form4" />				
 				</h:panelGrid>						
@@ -55,16 +55,16 @@ Registrar novo lote de um produto
 			<h:form id="form3" prependId="false">
 				<p:dialog header="#{campo.detalhesProduto}" widgetVar="produtoSelecionadoDialog" resizable="false" modal="true" showEffect="fade" hideEffect="fade" closeOnEscape="true"  draggable="false" >
 					<h:panelGrid id="gridVisualizacaoProduto" columns = "2">
-						<h:outputLabel for="nome_produto" value="#{campo.inputProduto}:" />  
+						<h:outputLabel for="nome_produto" value="#{campo.produto}:" />  
 						<h:outputText id="nome_produto" value="#{loteMB.produtoVisualizado.nome}"/>  
 						
-						<h:outputLabel for="fabricante" value="#{campo.inputFabricante}:" />  
+						<h:outputLabel for="fabricante" value="#{campo.fabricante}:" />  
 						<h:outputText id="fabricante" value="#{loteMB.produtoVisualizado.fabricante}"/> 
 						
-						<h:outputLabel for="quant_minima" value="#{campo.inputQuantMin}:" />  
+						<h:outputLabel for="quant_minima" value="#{campo.quantMin}:" />  
 						<h:outputText id="quant_minima" value="#{loteMB.produtoVisualizado.quantidadeMinima}" /> 
 						
-						<h:outputLabel for="descricao" value="#{campo.inputDescricao}:" /> 
+						<h:outputLabel for="descricao" value="#{campo.descricao}:" /> 
 						<h:outputText id="descricao" value="#{loteMB.produtoVisualizado.descricao}"/>
 					</h:panelGrid>				
 				</p:dialog>		
@@ -74,16 +74,16 @@ Registrar novo lote de um produto
 			<h:form id="form4" prependId="false">
 			
 				<h:panelGrid id="gridEdicaoLote" columns = "2" rendered="#{not empty loteMB.produtoSelecionado}">
-					<p:outputLabel for="lote" value="#{campo.inputLote}:" />  
+					<p:outputLabel for="lote" value="#{campo.lote}:" />  
 					<p:inputText id="lote" value="#{loteMB.prodEstoqueEdicao.lote}"  required="true" />  
 					
-					<p:outputLabel for="quantidade" value="#{campo.inputQuantidade}:" />  
+					<p:outputLabel for="quantidade" value="#{campo.quantidade}:" />  
 					<p:inputText id="quantidade" value="#{loteMB.prodEstoqueEdicao.quantidadeInicial}"  required="true" /> 
 					
-					<p:outputLabel for="fabricacao" value="#{campo.inputDtFabricacao}:"/>
+					<p:outputLabel for="fabricacao" value="#{campo.dtFabricacao}:"/>
 					<p:calendar id="fabricacao" value="#{loteMB.prodEstoqueEdicao.fabricacao}" showOn="button" required="true"/>
 					
-					<p:outputLabel for="validade" value="#{campo.inputDtValidade}:"/>
+					<p:outputLabel for="validade" value="#{campo.dtValidade}:"/>
 					<p:calendar id="validade"  value="#{loteMB.prodEstoqueEdicao.validade}" showOn="button"/>
 				
 					<p:commandButton value="#{campo.btnLimpar}" type="reset" /> 

@@ -14,42 +14,28 @@ Registrar novo lote de um produto
 	xmlns:p="http://primefaces.org/ui"> 
 
   
-	<ui:composition template="/templates/principal.xhtml">		
-		
-		<ui:param name="titulo" value="Cadastro Pedido"/>
-		
-		<ui:define name="centro">						
-			<script >
-				var produtoDetalhe = { 
-					nome : '',
-					fabricante : '',
-					quantMinima : 0,
-					descricao : ''};				
-				
-				function criaProdutoDetalhe(nome, fabricante, quantMinima, descricao){
-					alert(nome);
-					produtoDetalhe.nome = nome;
-					produtoDetalhe.fabricante = fabricante;
-					produtoDetalhe.quantMinima = quantMinima;
-					produtoDetalhe.descricao = descricao;
-				}		
-			</script>
+	<ui:composition template="/templates/principal.xhtml">			
+		<ui:param name="titulo" value="Cadastro Pedido"/>		
+		<ui:define name="centro">	
 			
-			<p:messages id="messages" showDetail="false" globalOnly="false" autoUpdate="true" redisplay="true" /> 
+			<p:messages id="messages" showDetail="false" globalOnly="false" autoUpdate="true" redisplay="true" /> 				
 			
+			<!-- Buscar Produto -->
 			<h:form id="form1" prependId="false">			
 				<h:panelGrid columns="3">
-					<p:outputLabel for="produto" value="#{campo.inputProduto}:" />  
+					<p:outputLabel for="produto" value="#{campo.produto}:" />  
 					<p:inputText id="produto" value="#{cadastroPedidoMB.produtoBuscado}"  required="true" />					
 					<p:commandButton  value="#{campo.btBuscar}" actionListener="#{cadastroPedidoMB.buscaProdutosPorNome}" update=":form2"/>				
 				</h:panelGrid>						
 			</h:form>			
 			
+			<!-- Produtos encontrados -->
 			<h:form id="form2" prependId="false">				
 				<p:dataTable id="gridProdutos" value="#{cadastroPedidoMB.produtos}" var="produto" rowKey="#{produto.codProduto}" selectionMode="single" 
-				selection="#{cadastroPedidoMB.produtoSelecionado}" >
+				selection="#{cadastroPedidoMB.produtoSelecionado}" rendered="#{not empty cadastroPedidoMB.produtos}">										
 					
-					<!-- <p:ajax event="rowSelect" update=":form4"  /> -->					
+					<!-- Ajax para seleção -->
+					<p:ajax event="rowSelect" update=":form4" listener="#{cadastroPedidoMB.buscaProdutoEstoque}" />
 					
 					<p:column headerText="#{campo.codigo}" >
 						<h:outputText value="#{produto.codProduto}"/>
@@ -59,35 +45,97 @@ Registrar novo lote de um produto
 					</p:column>
 					<p:column headerText="#{campo.fabricante}">
 						<h:outputText value="#{produto.fabricante}"/>
-					</p:column>	
+					</p:column>						
 					<p:column>
 						<!-- Ativa o Dialog de visualização de dados do Produto -->
-						<p:button id="viewBtn" value="#{campo.btnVisualizar}" icon="ui-icon-search" oncomplete="PF('produtoSelecionadoDialog').show()" 
-							onclick="criaProdutoDetalhe('#{produto.nome}', '#{produto.fabricante}', #{produto.quantidadeMinima}, '#{produto.descricao}')" />	
-						
-								
-					</p:column>												
+						<p:commandButton id="viewBtn"  value="#{campo.btnVisualizar}"    icon="ui-icon-search" oncomplete="PF('produtoSelecionadoDialog').show()" update=":form3">
+							<f:setPropertyActionListener value="#{produto}" target="#{cadastroPedidoMB.produtoVisualizado}" />
+						</p:commandButton>																
+					</p:column>																
 				</p:dataTable>																						
-			</h:form>
+			</h:form>			
 			
 			<!-- Visualização dos dados do produto. Ativado pelo botão Visualizar -->
 			<h:form id="form3" prependId="false">
 				<p:dialog header="#{campo.detalhesProduto}" widgetVar="produtoSelecionadoDialog" resizable="false" modal="true" showEffect="fade" hideEffect="fade" closeOnEscape="true"  draggable="false" >
 					<h:panelGrid id="gridVisualizacaoProduto" columns = "2">
-						<h:outputLabel for="nome_produto" value="#{campo.inputProduto}:" />  
-						<h:outputText id="nome_produto" value="produtoDetalhe.nome"/>  
+						<h:outputLabel for="nome_produto" value="#{campo.produto}:" />  
+						<h:outputText id="nome_produto" value="#{cadastroPedidoMB.produtoVisualizado.nome}"/>  
 						
-						<h:outputLabel for="fabricante" value="#{campo.inputFabricante}:" />  
-						<h:outputText id="fabricante" value="produtoDetalhe.fabricante"/> 
+						<h:outputLabel for="fabricante" value="#{campo.fabricante}:" />  
+						<h:outputText id="fabricante" value="#{cadastroPedidoMB.produtoVisualizado.fabricante}"/> 
 						
-						<h:outputLabel for="quant_minima" value="#{campo.inputQuantMin}:" />  
-						<h:outputText id="quant_minima" value="produtoDetalhe.quantMinima" /> 
+						<h:outputLabel for="quant_minima" value="#{campo.quantMin}:" />  
+						<h:outputText id="quant_minima" value="#{cadastroPedidoMB.produtoVisualizado.quantidadeMinima}" /> 
 						
-						<h:outputLabel for="descricao" value="#{campo.inputDescricao}:" /> 
-						<h:outputText id="descricao" value="produtoDetalhe.descricao"/>
+						<h:outputLabel for="descricao" value="#{campo.descricao}:" /> 
+						<h:outputText id="descricao" value="#{cadastroPedidoMB.produtoVisualizado.descricao}"/>
 					</h:panelGrid>				
 				</p:dialog>		
 			</h:form>
+			
+			<!-- Lotes (ProdutoEstoque) encontrados para o produto selecionado -->
+			<h:form id="form4" prependId="false">				
+				<p:dataTable id="gridLote" value="#{cadastroPedidoMB.produtoEstoques}" var="lote" rowKey="#{lote.codProdutoEstoque}" selectionMode="single" 
+				selection="#{cadastroPedidoMB.loteSelecionado}" rendered="#{not empty cadastroPedidoMB.produtoEstoques}" >										
+					
+					<!-- Ajax para seleção -->
+					<p:ajax event="rowSelect" update=":form5"/>
+					
+					<p:column headerText="#{campo.codigo}" >
+						<h:outputText value="#{lote.codProdutoEstoque}"/>
+					</p:column>				
+					<p:column headerText="#{campo.lote}">
+						<h:outputText value="#{lote.lote}"/>
+					</p:column>
+					<p:column headerText="#{campo.quantidade}">
+						<h:outputText value="#{lote.quantidadeAtual}"/>
+					</p:column>		
+					<p:column headerText="#{campo.dtFabricacao}">
+						<h:outputText value="#{lote.fabricacao}"/>
+					</p:column>	
+					<p:column headerText="#{campo.dtValidade}">
+						<h:outputText value="#{lote.validade}"/>
+					</p:column>			
+																				
+				</p:dataTable>																						
+			</h:form>
+			
+			<!-- Incluir item no pedido -->
+			<h:form id="form5" prependId="false">
+				<h:panelGrid id="gridEdicaoLote" columns = "2" rendered="#{not empty cadastroPedidoMB.loteSelecionado}">
+					<p:outputLabel for="produto-selecionado" value="#{campo.produto}:" />  
+					<h:outputText id="produto-selecionado" value="#{cadastroPedidoMB.produtoSelecionado.nome}"/> 
+					
+					<p:outputLabel for="lote-selecionado" value="#{campo.lote}:" />  
+					<h:outputText id="lote-selecionado" value="#{cadastroPedidoMB.loteSelecionado.lote}"/>   
+					
+					<p:outputLabel for="quantidade-item" value="#{campo.quantidade}:" />  
+					<p:inputText id="quantidade-item" value="#{cadastroPedidoMB.itemPedidoEdicao.quantidade}"  required="true" />				
+					
+					<p:commandButton value="#{campo.btnIncluir}" actionListener="#{cadastroPedidoMB.incluirItemPedido}" update=":formPedido form5 :form4" />
+				</h:panelGrid>				
+			</h:form>		
+				
+			<!-- Itens adicionados ao Pedido-->
+			<h:form id="formPedido" prependId="false">				
+				<p:dataTable id="gridPItens" value="#{cadastroPedidoMB.itensPedido}" var="item" rendered="#{not empty cadastroPedidoMB.itensPedido}">					
+					<p:column headerText="#{campo.produto}" >
+						<h:outputText value="#{item.produto.nome}"/>
+					</p:column>				
+					<p:column headerText="#{campo.lote}">
+						<h:outputText value="#{item.lote}"/>
+					</p:column>	
+					<p:column headerText="#{campo.quantidade}">
+						<h:outputText value="#{item.quantidade}"/>
+					</p:column>		
+						<p:commandButton value="#{campo.btnEditar}" />
+						<p:commandButton value="#{campo.btnExcluir}" />
+					<p:column>
+						
+					</p:column>								
+				</p:dataTable>											
+			</h:form>			
 						
 		</ui:define>	
 	</ui:composition>

@@ -36,7 +36,7 @@ public class ProdutoEstoqueService implements Serializable, IProdutoEstoqueServi
 	@Transacional
 	public void cadastraProdutoEstoque(ProdutoEstoque produtoEstoque) throws ProdutoEstoqueInvalidoException {
 		
-		List<ProdutoEstoque> produtosEstoqueDoBD = dao.buscaProdutoEstoquePorLote(produtoEstoque.getProduto(), produtoEstoque.getLote());
+		List<ProdutoEstoque> produtosEstoqueDoBD = dao.buscaProdutoEstoquePorLoteProduto(produtoEstoque.getProduto(), produtoEstoque.getLote());
 		
 		// Se o lote já existe no BD, verificar se é um lote válido
 		if (produtosEstoqueDoBD != null) {
@@ -46,7 +46,12 @@ public class ProdutoEstoqueService implements Serializable, IProdutoEstoqueServi
 		}
 		
 		dao.salva(produtoEstoque);	
-	}		
+	}
+	
+	public List<ProdutoEstoque> buscaProdutoEstoquePorProduto(Produto produto){
+		
+		return  dao.buscaProdutoEstoquePorProduto(produto);	
+	}
 
 	private boolean comparaIgualdadeProdutoEstoque(ProdutoEstoque a, ProdutoEstoque b){
 		if( (a.getLote() == b.getLote()) && (a.getFabricacao() == b.getFabricacao()) && (a.getValidade() == b.getValidade()) ){

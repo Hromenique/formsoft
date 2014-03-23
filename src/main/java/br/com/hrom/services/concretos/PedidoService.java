@@ -42,7 +42,7 @@ public class PedidoService implements Serializable, IPedidoService{
 		List<ItemPedido> resultado;
 		for(ItemPedido item : itens){
 			
-			produtoEstoqueDao.buscaProdutoEstoquePorLote(item.getProduto(), item.getLote());
+			produtoEstoqueDao.buscaProdutoEstoquePorLoteProduto(item.getProduto(), item.getLote());
 			
 		}
 	}

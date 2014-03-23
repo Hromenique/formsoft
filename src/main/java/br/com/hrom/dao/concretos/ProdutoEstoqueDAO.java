@@ -24,12 +24,22 @@ public class ProdutoEstoqueDAO extends AbstractGenericDAO<ProdutoEstoque> implem
 	public ProdutoEstoqueDAO(EntityManager entityManager) {
 		super(entityManager);		
 	}
-
+	
 	@Override
-	public List<ProdutoEstoque> buscaProdutoEstoquePorLote(Produto produto, String lote) {
+	public List<ProdutoEstoque> buscaProdutoEstoquePorLoteProduto(Produto produto, String lote) {
 		String sql = "SELECT produtoLote FROM ProdutoEstoque produtoLote WHERE produtoLote.lote = ?0 AND produtoLote.produto = ?1";
 		List<ProdutoEstoque> resultList = getEntityManager().createQuery(sql, ProdutoEstoque.class).setParameter(0, lote).setParameter(1, produto).getResultList();
+
+		return (resultList.size() > 0) ? resultList : null;
+	}
+
+	@Override
+	public List<ProdutoEstoque> buscaProdutoEstoquePorProduto(Produto produto) {
+		String sql = "SELECT produtoLote FROM ProdutoEstoque produtoLote WHERE produtoLote.produto = ?0";
+		List<ProdutoEstoque> resultList = getEntityManager().createQuery(sql, ProdutoEstoque.class).setParameter(0, produto).getResultList();
 				
 		return (resultList.size() > 0) ? resultList : null;
-	}	
+	}
+
+
 }

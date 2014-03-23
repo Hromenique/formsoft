@@ -1,0 +1,58 @@
+<!-- 
+@Author Hromenique Cezniowscki Leite Batista
+@Version 1.0
+ 
+Registrar novo lote de um produto
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"> 
+
+  
+	<ui:composition template="/templates/principal.xhtml">		
+		
+		<ui:param name="titulo" value="Cadastro Pedido"/>
+		
+		<ui:define name="centro">	
+			
+			<p:messages id="messages" showDetail="false" globalOnly="false" autoUpdate="true" redisplay="true" /> 
+			
+			<!-- Cadastro Pedido -->
+			<h:form id="formPedido" prependId="false">
+				
+				<h:panelGrid id="gridPedido" columns = "2">
+					<p:outputLabel for="lote" value="#{campo.comprador}:" />  
+					<p:inputText id="lote" value="#{cadastroPedidoMB.pedidoEdicao.comprador}"  required="true" />  
+					
+					<p:outputLabel for="dtEntrega" value="#{campo.dtEntrega}:" />  
+					<p:calendar id="dtEntrega" value="#{cadastroPedidoMB.pedidoEdicao.dataEntrega}" />
+				</h:panelGrid>	
+				
+				<!-- Itens do Pedido -->
+				<p:dataTable id="gridPItens" value="#{cadastroPedidoMB.itensPedido}" var="item" rendered="#{not empty cadastroPedidoMB.itensPedido}">					
+					<p:column headerText="#{campo.produto}" >
+						<h:outputText value="#{item.produto.nome}"/>
+					</p:column>				
+					<p:column headerText="#{campo.lote}">
+						<h:outputText value="#{item.lote}"/>
+					</p:column>	
+					<p:column headerText="#{campo.quantidade}">
+						<h:outputText value="#{item.quantidade}"/>
+					</p:column>									
+				</p:dataTable>
+				
+				
+				<!-- Adicionar o botão -->
+							
+			</h:form>	
+	
+						
+		</ui:define>	
+	</ui:composition>
+</html>
+
